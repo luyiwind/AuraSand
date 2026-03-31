@@ -34,31 +34,19 @@
         }
 
         /* 导航栏 */
-        <nav>
-            <!-- ⬇️ 修改这一段：加入图标 img ⬇️ -->
-            <div class="logo">
-                <img src="logo.png" alt="AuraSand Logo">
-                AuraSand
-            </div>
-        </nav>
+        nav {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px; /* 图标和文字的间距 */
             font-size: 24px;
             font-weight: 700;
             color: #fff;
             text-shadow: 0 2px 4px rgba(0,0,0,0.1);
             letter-spacing: 1px;
-        }
-
-        /* ⬇️ 新增图标的具体样式 ⬇️ */
-        .logo img {
-            width: 40px; /* 图标大小 */
-            height: 40px;
-            border-radius: 10px; /* 如果你的图不是圆角的，这里可以加圆角 */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
 
         /* 首屏布局 */
