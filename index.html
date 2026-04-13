@@ -86,9 +86,10 @@
         .feature-card h3 { font-size: 20px; margin-bottom: 15px; color: var(--primary-color); }
         .feature-card p { font-size: 15px; color: var(--text-light); line-height: 1.7; }
 
-        footer { text-align: center; padding: 40px; color: rgba(255,255,255,0.7); }
-        footer a { color: #fff; text-decoration: none; margin: 0 10px; font-size: 14px; opacity: 0.9; }
-        footer a:hover { opacity: 1; text-decoration: underline; }
+        footer { text-align: center; padding: 50px 20px; color: rgba(255,255,255,0.8); }
+        footer .footer-links { margin-top: 15px; }
+        footer a { color: #fff; text-decoration: none; margin: 0 15px; font-size: 14px; font-weight: 500; }
+        footer a:hover { text-decoration: underline; opacity: 1; }
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -134,7 +135,7 @@
         </div>
     </section>
 
-    <!-- 演示 -->
+    <!-- 演示区 -->
     <section class="demo-section">
         <div class="demo-tabs">
             <button class="tab-btn" onclick="toggleVideo('vertical')" data-i18n="vidMobile">📱 Mobile Demo (Portrait)</button>
@@ -146,37 +147,37 @@
         </div>
     </section>
 
-    <!-- 特性卡片 -->
+    <!-- 功能特性 -->
     <section class="features">
         <div class="feature-card">
-            <h3 data-i18n="f1Title">🎨 3D 数字潮玩</h3>
-            <p data-i18n="f1Desc">从梦幻独角兽到晶莹鲸鱼，收集风格各异的精美艺术沙漏，打造专属桌面美学。</p>
+            <h3 data-i18n="f1Title">🎨 3D Digital Art</h3>
+            <p data-i18n="f1Desc">From dreamy unicorns to crystal whales, collect exquisite art hourglasses to build your desktop aesthetics.</p>
         </div>
         <div class="feature-card">
-            <h3 data-i18n="f2Title">🧘 极致沉浸心流</h3>
-            <p data-i18n="f2Desc">开启 Zen 模式，UI 智能隐退。让视觉完全聚焦于流动的沙砾，告别一切干扰。</p>
+            <h3 data-i18n="f2Title">🧘 Extreme Flow State</h3>
+            <p data-i18n="f2Desc">Enable Zen mode for smart UI hiding. Focus entirely on the flowing sand and eliminate all distractions.</p>
         </div>
         <div class="feature-card">
-            <h3 data-i18n="f3Title">🎶 全方位感官体验</h3>
-            <p data-i18n="f3Desc">专属高品质背景白噪音，配合细腻的交互震动与动画特效，让专注充满仪式感。</p>
+            <h3 data-i18n="f3Title">🎶 Sensory Experience</h3>
+            <p data-i18n="f3Desc">Exclusive high-quality white noise and haptic feedback make every focus session a ritual.</p>
         </div>
         <div class="feature-card">
-            <h3 data-i18n="f4Title">⏳ 灵活时间掌控</h3>
-            <p data-i18n="f4Desc">1-999 分钟随心设定，智能记录您的专属习惯。支持锁屏通知与后台精确运行。</p>
+            <h3 data-i18n="f4Title">⏳ Flexible Timer</h3>
+            <p data-i18n="f4Desc">Set any time from 1-999 mins. Supports lock screen notifications and precise background tracking.</p>
         </div>
         <div class="feature-card">
-            <h3 data-i18n="f5Title">✨ 隐藏计时 & 专属禅语 (Pro)</h3>
-            <p data-i18n="f5Desc">告别数字焦虑。支持隐藏倒计时滴答，浮现宁静禅语。支持自定义箴言，让每一次专注都成为心灵对话。</p>
+            <h3 data-i18n="f5Title">✨ Hide Timer & Zen Quotes (Pro)</h3>
+            <p data-i18n="f5Desc">Say goodbye to digital anxiety. Hide the ticking digits and display calming Zen quotes. Customize your own mottos.</p>
         </div>
         <div class="feature-card">
-            <h3 data-i18n="f6Title">⛈️ 声光联动拟真特效(Pro)</h3>
-            <p data-i18n="f6Desc">独创天气联动体验。当屏幕闪过雷电，雨声与闪电完美同步交织，带给您极具穿透力的沉浸式视听享受。</p>
+            <h3 data-i18n="f6Title">⛈️ Weather Effects(Pro)</h3>
+            <p data-i18n="f6Desc">Immersive rain and lightning sound-visual synchronization. Experience the peaceful power of nature.</p>
         </div>
     </section>
 
     <footer>
         <p>© 2026 AuraSand. All rights reserved.</p>
-        <div style="margin-top: 12px;">
+        <div class="footer-links">
             <a href="https://luyiwind.github.io/Hourglass-privacy/" data-i18n="privacy">Privacy Policy</a>
             <a href="mailto:luyiuestc@gmail.com" data-i18n="contact">Contact Us</a>
         </div>
