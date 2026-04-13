@@ -19,7 +19,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans SC', 'Noto Sans JP', 'Noto Sans KR', sans-serif; }
         body { background: var(--bg-gradient); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
 
-        /* 导航 & 语言切换 */
         nav { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 24px; font-weight: 700; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .lang-selector {
@@ -28,7 +27,6 @@
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-size: 14px; outline: none;
         }
 
-        /* 首屏展示 */
         .hero { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
         .hero-text { flex: 1; max-width: 500px; animation: fadeUp 1s ease-out; }
         .hero-text h1 { font-size: 48px; color: #fff; margin-bottom: 20px; line-height: 1.2; }
@@ -45,7 +43,7 @@
             transition: background-image 0.5s ease;
         }
 
-        /* ⬇️ 内嵌视频演示区优化 ⬇️ */
+        /* ⬇️ 内嵌视频演示区优化 - 比例自适应 ⬇️ */
         .demo-section { max-width: 1200px; margin: 20px auto; padding: 0 5%; text-align: center; }
         .demo-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; }
         .tab-btn {
@@ -56,7 +54,7 @@
         .tab-btn:hover { background: #fff; transform: translateY(-2px); }
 
         .video-viewport {
-            max-width: 1000px; margin: 0 auto; display: none; 
+            max-width: 100%; margin: 0 auto; display: none; 
             flex-direction: column; align-items: center; gap: 15px;
             animation: fadeIn 0.5s ease;
         }
@@ -65,27 +63,27 @@
             overflow: hidden; background: #000; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             border: 4px solid #fff; border-radius: 20px;
+            display: inline-block; /* 让容器随视频大小变化 */
             line-height: 0;
         }
 
-        /* 竖屏视频：限制高度，确保一屏看完 */
-        .video-viewport.vertical .video-container {
-            width: 260px; /* 缩小宽度 */
-            aspect-ratio: 9 / 16;
-            max-height: 65vh; /* 限制最高占屏幕 65% */
+        /* 竖屏视频自适应：限制高度，宽度随比例 */
+        .video-viewport.vertical video {
+            height: 70vh;  /* 占屏幕高度的70% */
+            width: auto;   /* 宽度自适应比例 */
+            max-width: 90vw; 
         }
 
-        /* 横屏视频：保持比例，撑满无黑边 */
-        .video-viewport.horizontal .video-container {
-            width: 100%;
-            max-width: 720px;
-            aspect-ratio: 16 / 9;
+        /* 横屏视频自适应：限制宽度，高度随比例 */
+        .video-viewport.horizontal video {
+            width: 90vw;   /* 占屏幕宽度的90% */
+            max-width: 900px; /* PC端不宜过大 */
+            height: auto;  /* 高度自适应比例 */
         }
 
         video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* 核心：消除黑边，自动填充 */
+            display: block;
+            object-fit: contain; /* 确保不裁剪 */
         }
 
         .video-close-btn {
@@ -93,7 +91,7 @@
             padding: 8px 25px; border-radius: 20px; cursor: pointer; font-size: 14px;
         }
 
-        /* 功能卡片、页脚等样式保持不变 */
+        /* 其他通用样式 */
         .features { max-width: 1200px; margin: 50px auto 80px; padding: 0 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .feature-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px; transition: 0.3s; backdrop-filter: blur(16px); }
         .feature-card h3 { font-size: 20px; margin-bottom: 12px; color: var(--primary-color); }
@@ -109,7 +107,10 @@
             .hero { flex-direction: column; text-align: center; }
             .hero-text h1 { font-size: 32px; }
             .demo-tabs { flex-direction: column; align-items: center; }
-            .video-viewport.horizontal .video-container { width: 100%; }
+            /* 移动端横屏视频稍微调小 */
+            .video-viewport.horizontal video { width: 95vw; }
+            /* 移动端竖屏视频高度调小，预留按钮位置 */
+            .video-viewport.vertical video { height: 60vh; }
         }
     </style>
 </head>
@@ -145,7 +146,7 @@
         </div>
     </section>
 
-    <!-- 视频演示 -->
+    <!-- 演示区域 -->
     <section class="demo-section">
         <div class="demo-tabs">
             <button class="tab-btn" onclick="toggleVideo('vertical')" data-i18n="vidMobile">📱 Mobile Demo (Portrait)</button>
@@ -211,7 +212,7 @@
                 "vidMobile": "📱 手機端演示 (豎屏)", "vidTablet": "💻 平板端演示 (橫屏)", "closeVid": "收起演示 ✕",
                 "scanQr": "掃碼獲取", "f1Title": "🎨 3D 數位潮玩", "f1Desc": "收集風格各異的精美藝術沙漏。",
                 "f2Title": "🧘 極致沉浸心流", "f2Desc": "開啟 Zen 模式，告別一切干擾。",
-                "f3Title": "🎶 全方位感官體驗", "f3Desc": "專屬高品質白噪音，配合細膩互動震動。",
+                "f3Title": "🎶 全方位感官體驗", "f3Desc": "專屬高品質背景白噪音，配合細膩互動震動。",
                 "f4Title": "⏳ 靈活時間掌控", "f4Desc": "1-999 分鐘隨心設定，支援後台精確運行。",
                 "f5Title": "✨ 隱藏計時數字(Pro)", "f5Desc": "隱藏計時數字並顯示禪語，支援自訂。",
                 "f6Title": "⛈️ 聲光聯動特效(Pro)", "f6Desc": "下雨和閃電音效聯動，盡享沉浸體驗。",
