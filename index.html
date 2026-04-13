@@ -69,21 +69,17 @@
             border: 4px solid #fff; 
             border-radius: 20px;
             position: relative;
-            /* 修正：使用更智能的尺寸控制 */
-            width: auto;
-            height: auto;
-            transition: opacity 0.3s ease;
+            width: 0; height: 0;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .video-container iframe, .video-container video {
-            display: block;
-            width: 100%;
-            height: 100%;
-            border: none;
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; border: none; display: block;
             background: #000;
-            /* 修正：消除小黑边的核心代码 */
-            object-fit: cover; 
-            transform: scale(1.01); 
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
 
         .video-close-btn {
@@ -104,7 +100,9 @@
         .feature-card p { font-size: 15px; color: var(--text-light); line-height: 1.7; }
 
         footer { text-align: center; padding: 40px; color: rgba(255,255,255,0.7); }
+        footer .footer-links { margin-top: 15px; }
         footer a { color: #fff; text-decoration: none; margin: 0 15px; font-size: 14px; font-weight: 500; }
+        footer a:hover { text-decoration: underline; opacity: 1; }
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -200,12 +198,12 @@
             'vertical': {
                 youtube: 'tYmPDWBYR4U',
                 mp4: 'https://www.siteflare.de5.net/api/public/dl/H28ZnnW3/Screenrecorder-2026-04-13-07-53-23-461.mp4',
-                defaultRatio: 1200/2608
+                defaultRatio: 1200 / 2608
             },
             'horizontal': {
                 youtube: 'LbEwsxyWIBs',
                 mp4: 'https://www.siteflare.de5.net/api/public/dl/JgOv90hk/Screenrecorder-2026-04-13-07-54-57-966.mp4',
-                defaultRatio: 2608/1200
+                defaultRatio: 2608 / 1200
             }
         };
 
@@ -255,7 +253,7 @@
             "ja": {
                 "screenshot": "screenshot_jp.jpg",
                 "heroTitle": "時間を、<br>芸術に。",
-                "heroDesc": "退屈な数字とはお別れ。美しい3Dの砂時計と、専用のホワイトノイズ、雨音、アニメーション効果が、没入型の集中空間を作ります.",
+                "heroDesc": "退屈な数字とはお別れ。美しい3Dの砂時計と、専用のホワイトノイズ、雨音、アニメーション効果が、没入型の集中空間を作ります。",
                 "vidMobile": "📱 モバイルデモ", "vidTablet": "💻 タブレットデモ", "closeVid": "閉じる ✕", "scanQr": "スキャンしてDL",
                 "f1Title": "🎨 3Dデジタルアート", "f1Desc": "夢のようなユニコーンからクリスタルクジラまで、多彩なアート砂時計を集めてデスクトップを美しく。",
                 "f2Title": "🧘 究極のフロー状態", "f2Desc": "ZenモードでUIを非表示。砂の流れに集中し、すべての気を散らすものを排除。",
@@ -269,7 +267,7 @@
             "ko": {
                 "screenshot": "screenshot_ko.jpg",
                 "heroTitle": "시간을<br>예술로 만들다.",
-                "heroDesc": "지루한 숫자와 작별하세요. 아름다운 3D 모래시계와 전용 백색 소음, 빗소리, 애니메이션 효과가 방해 없는 집중 공간을 만듭니다.",
+                "heroDesc": "지루한 숫자와 작별하세요. 아름다운 3D 모래시계와 전용 백색 소음, 빗소리, 애니메이션 효과가 방해 없는 집중 공간을 만듭니다。",
                 "vidMobile": "📱 모바일 데모", "vidTablet": "💻 태블릿 데모", "closeVid": "닫기 ✕", "scanQr": "다운로드 스캔",
                 "f1Title": "🎨 3D 디지털 아트", "f1Desc": "유니콘부터 고래까지, 다양한 예술적인 모래시계를 수집하여 나만의 데스크탑 미학을 만드세요.",
                 "f2Title": "🧘 극강의 몰입 상태", "f2Desc": "Zen 모드를 켜면 UI가 숨겨집니다. 흐르는 모래에 집중하고 모든 방해 요소를 차단하세요.",
@@ -287,7 +285,6 @@
         const playBadgeImg = document.getElementById('playBadgeImg');
         let googleAvailable = false;
 
-        // 探测比例，并返回非常精确的小数值
         function detectVideoRatio(mp4Url, defaultRatio) {
             return new Promise((resolve) => {
                 const tempVideo = document.createElement('video');
@@ -297,7 +294,6 @@
 
                 tempVideo.onloadedmetadata = () => {
                     clearTimeout(timeout);
-                    // 修正点：不进行任何四舍五入，保留高精度比例
                     const preciseRatio = tempVideo.videoWidth / tempVideo.videoHeight;
                     resolve(preciseRatio);
                     tempVideo.remove();
@@ -311,17 +307,18 @@
             });
         }
 
-        // 设置容器尺寸，并启用精度修复
+        // 统一尺寸应用逻辑，解决 Edge 兼容性并消除虚线
         function applyPreciseRatio(type, ratio) {
-            // 修正：使用 CSS aspect-ratio 让浏览器内核处理 sub-pixel 渲染
-            container.style.aspectRatio = ratio.toString();
-
             if (type === 'vertical') {
-                container.style.width = 'auto';
-                container.style.height = '70vh';
+                const h = window.innerHeight * 0.7;
+                const w = h * ratio;
+                container.style.height = Math.round(h) + 'px';
+                container.style.width = Math.round(w) + 'px';
             } else {
-                container.style.width = 'min(90vw, 900px)';
-                container.style.height = 'auto';
+                const w = Math.min(window.innerWidth * 0.9, 900);
+                const h = w / ratio;
+                container.style.width = Math.round(w) + 'px';
+                container.style.height = Math.round(h) + 'px';
             }
         }
 
@@ -330,16 +327,18 @@
             viewport.style.display = 'flex';
             viewport.className = 'video-viewport ' + type;
             
-            // 获取真实比例
-            const ratio = await detectVideoRatio(source.mp4, source.defaultRatio);
-            
-            // 应用比例并微调
-            applyPreciseRatio(type, ratio);
+            // 1. 立即应用默认比例，防止初始加载时容器大小错误
+            applyPreciseRatio(type, source.defaultRatio);
 
+            // 2. 后台获取真实比例并平滑更新
+            detectVideoRatio(source.mp4, source.defaultRatio).then(realRatio => {
+                applyPreciseRatio(type, realRatio);
+            });
+
+            // 3. 渲染内容
             if (googleAvailable) {
                 container.innerHTML = `<iframe src="https://www.youtube.com/embed/${source.youtube}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen"></iframe>`;
             } else {
-                // 修正：给 MP4 播放器也加上 scale(1.01) 消除边缘缝隙
                 container.innerHTML = `<video playsinline controls loop autoplay src="${source.mp4}"></video>`;
             }
 
@@ -351,7 +350,8 @@
         function hideVideo() {
             viewport.style.display = 'none';
             container.innerHTML = '';
-            container.style.aspectRatio = '';
+            container.style.width = '0';
+            container.style.height = '0';
         }
 
         function loadBadgeAndDetect(targetGoogleUrl) {
@@ -362,7 +362,6 @@
             };
             detector.onerror = () => {
                 googleAvailable = false;
-                // 保持默认图，不切换
             };
             detector.src = targetGoogleUrl;
         }
@@ -374,9 +373,7 @@
                 if (dict[key]) el.innerHTML = dict[key];
             });
             document.getElementById('phoneMockup').style.backgroundImage = `url('${dict['screenshot']}')`;
-            
             loadBadgeAndDetect(dict['playBadge']);
-            
             localStorage.setItem('aura_lang', langCode);
             document.getElementById('langSwitcher').value = langCode;
         }
