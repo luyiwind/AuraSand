@@ -23,9 +23,21 @@
         nav { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 24px; font-weight: 700; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .lang-selector {
-            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.5);
-            color: #fff; padding: 5px 10px; border-radius: 20px; cursor: pointer; backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.5); /* 提高对比度 */
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            color: #2D3748; /* 改用深色文字 */
+            padding: 6px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            font-size: 14px;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.3s ease;
         }
+        .lang-selector:hover { background: rgba(255, 255, 255, 0.8); }
+        .lang-selector option { background-color: #fff; color: #2D3748; }
 
         /* 首屏 */
         .hero { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
