@@ -74,7 +74,6 @@
             padding: 8px 25px; border-radius: 20px; cursor: pointer; font-size: 14px;
         }
 
-        /* 核心特性卡片网格 */
         .features {
             max-width: 1200px; margin: 50px auto 100px; padding: 0 5%;
             display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
@@ -88,7 +87,8 @@
         .feature-card p { font-size: 15px; color: var(--text-light); line-height: 1.7; }
 
         footer { text-align: center; padding: 40px; color: rgba(255,255,255,0.7); }
-        footer a { color: #fff; text-decoration: none; margin: 0 10px; }
+        footer a { color: #fff; text-decoration: none; margin: 0 10px; font-size: 14px; opacity: 0.9; }
+        footer a:hover { opacity: 1; text-decoration: underline; }
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -134,7 +134,7 @@
         </div>
     </section>
 
-    <!-- 视频演示 -->
+    <!-- 演示 -->
     <section class="demo-section">
         <div class="demo-tabs">
             <button class="tab-btn" onclick="toggleVideo('vertical')" data-i18n="vidMobile">📱 Mobile Demo (Portrait)</button>
@@ -149,32 +149,38 @@
     <!-- 特性卡片 -->
     <section class="features">
         <div class="feature-card">
-            <h3 data-i18n="f1Title">🎨 3D Digital Art</h3>
-            <p data-i18n="f1Desc">From dreamy unicorns to crystal whales, collect exquisite art hourglasses to build your desktop aesthetics.</p>
+            <h3 data-i18n="f1Title">🎨 3D 数字潮玩</h3>
+            <p data-i18n="f1Desc">从梦幻独角兽到晶莹鲸鱼，收集风格各异的精美艺术沙漏，打造专属桌面美学。</p>
         </div>
         <div class="feature-card">
-            <h3 data-i18n="f2Title">🧘 Extreme Flow State</h3>
-            <p data-i18n="f2Desc">Enable Zen mode for smart UI hiding. Focus entirely on the flowing sand and eliminate all distractions.</p>
+            <h3 data-i18n="f2Title">🧘 极致沉浸心流</h3>
+            <p data-i18n="f2Desc">开启 Zen 模式，UI 智能隐退。让视觉完全聚焦于流动的沙砾，告别一切干扰。</p>
         </div>
         <div class="feature-card">
-            <h3 data-i18n="f3Title">🎶 Sensory Experience</h3>
-            <p data-i18n="f3Desc">Exclusive high-quality white noise and haptic feedback make every focus session a ritual.</p>
+            <h3 data-i18n="f3Title">🎶 全方位感官体验</h3>
+            <p data-i18n="f3Desc">专属高品质背景白噪音，配合细腻的交互震动与动画特效，让专注充满仪式感。</p>
         </div>
         <div class="feature-card">
-            <h3 data-i18n="f4Title">⏳ Flexible Timer</h3>
-            <p data-i18n="f4Desc">Set any time from 1-999 mins. Supports lock screen notifications and precise background tracking.</p>
+            <h3 data-i18n="f4Title">⏳ 灵活时间掌控</h3>
+            <p data-i18n="f4Desc">1-999 分钟随心设定，智能记录您的专属习惯。支持锁屏通知与后台精确运行。</p>
         </div>
         <div class="feature-card">
-            <h3 data-i18n="f5Title">✨ Hide Countdown(Pro)</h3>
-            <p data-i18n="f5Desc">Say goodbye to digital anxiety. Hide the ticking digits and display calming Zen quotes. Customize your own mottos.</p>
+            <h3 data-i18n="f5Title">✨ 隐藏计时 & 专属禅语 (Pro)</h3>
+            <p data-i18n="f5Desc">告别数字焦虑。支持隐藏倒计时滴答，浮现宁静禅语。支持自定义箴言，让每一次专注都成为心灵对话。</p>
         </div>
         <div class="feature-card">
-            <h3 data-i18n="f6Title">⛈️ Weather Effects(Pro)</h3>
-            <p data-i18n="f6Desc">Immersive rain and lightning sound-visual synchronization. Experience the peaceful power of nature.</p>
+            <h3 data-i18n="f6Title">⛈️ 声光联动拟真特效(Pro)</h3>
+            <p data-i18n="f6Desc">独创天气联动体验。当屏幕闪过雷电，雨声与闪电完美同步交织，带给您极具穿透力的沉浸式视听享受。</p>
         </div>
     </section>
 
-    <footer><p>© 2026 AuraSand. <a href="https://luyiwind.github.io/Hourglass-privacy/" data-i18n="privacy">Privacy Policy</a></p></footer>
+    <footer>
+        <p>© 2026 AuraSand. All rights reserved.</p>
+        <div style="margin-top: 12px;">
+            <a href="https://luyiwind.github.io/Hourglass-privacy/" data-i18n="privacy">Privacy Policy</a>
+            <a href="mailto:luyiuestc@gmail.com" data-i18n="contact">Contact Us</a>
+        </div>
+    </footer>
 
     <script>
         const sources = {
@@ -187,14 +193,14 @@
                 "screenshot": "screenshot_en.jpg",
                 "heroTitle": "Let time flow <br>into art.",
                 "heroDesc": "Say goodbye to boring digits. Stunning 3D aesthetic hourglasses with exclusive deep-sea white noise create a zero-distraction focus space for you.",
-                "vidMobile": "📱 Mobile Demo (Portrait)", "vidTablet": "💻 Tablet Demo (Landscape)", "closeVid": "Close ✕", "scanQr": "Scan to DL",
+                "vidMobile": "📱 Mobile Demo (Portrait)", "vidTablet": "💻 Tablet Demo (Landscape)", "closeVid": "Close Demo ✕", "scanQr": "Scan to DL",
                 "f1Title": "🎨 3D Digital Art", "f1Desc": "From dreamy unicorns to crystal whales, collect exquisite art hourglasses to build your desktop aesthetics.",
                 "f2Title": "🧘 Extreme Flow State", "f2Desc": "Enable Zen mode for smart UI hiding. Focus entirely on the flowing sand and eliminate all distractions.",
                 "f3Title": "🎶 Sensory Experience", "f3Desc": "Exclusive high-quality white noise and haptic feedback make every focus session a ritual.",
                 "f4Title": "⏳ Flexible Timer", "f4Desc": "Set any time from 1-999 mins. Supports lock screen notifications and precise background tracking.",
                 "f5Title": "✨ Hide Timer & Zen Quotes (Pro)", "f5Desc": "Say goodbye to digital anxiety. Hide the ticking digits and display calming Zen quotes. Customize your own mottos.",
                 "f6Title": "⛈️ Synced Weather Effects (Pro)", "f6Desc": "Unique weather-synced experience. Rain and lightning sounds are perfectly synchronized for ultimate immersion.",
-                "privacy": "Privacy Policy", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                "privacy": "Privacy Policy", "contact": "Contact Us", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
             },
             "zh-CN": {
                 "screenshot": "screenshot_zh-CN.jpg",
@@ -207,7 +213,7 @@
                 "f4Title": "⏳ 灵活时间掌控", "f4Desc": "1-999 分钟随心设定，智能记录您的专属习惯。支持锁屏通知与后台精确运行。",
                 "f5Title": "✨ 隐藏计时 & 专属禅语 (Pro)", "f5Desc": "告别数字焦虑。支持隐藏倒计时滴答，浮现宁静禅语。支持自定义箴言，让每一次专注都成为心灵对话。",
                 "f6Title": "⛈️ 声光联动拟真特效(Pro)", "f6Desc": "独创天气联动体验。当屏幕闪过雷电，雨声与闪电完美同步交织，带给您极具穿透力的沉浸式视听享受。",
-                "privacy": "隐私政策", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/zh-cn_badge_web_generic.png"
+                "privacy": "隐私政策", "contact": "联系我们", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/zh-cn_badge_web_generic.png"
             },
             "zh-TW": {
                 "screenshot": "screenshot_zh-TW.jpg",
@@ -220,12 +226,12 @@
                 "f4Title": "⏳ 靈活時間掌控", "f4Desc": "1-999 分鐘隨心設定，智能記錄您的專屬習慣。支援鎖屏通知與後台精確運行。",
                 "f5Title": "✨ 隱藏計時 & 專屬禪語 (Pro)", "f5Desc": "告別數字焦慮。支援隱藏倒計時滴答，浮現寧靜禪語。支援自訂箴言，讓每一次專注都成為心靈對話。",
                 "f6Title": "⛈️ 聲光聯動擬真特效(Pro)", "f6Desc": "獨創天氣聯動體驗。當螢幕閃過雷電，雨聲與閃電完美同步交織，帶給您極具穿透力的沉浸式視聽享受。",
-                "privacy": "隱私政策", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/zh-tw_badge_web_generic.png"
+                "privacy": "隱私政策", "contact": "聯繫我們", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/zh-tw_badge_web_generic.png"
             },
             "ja": {
                 "screenshot": "screenshot_jp.jpg",
                 "heroTitle": "時間を、<br>芸術に。",
-                "heroDesc": "退屈な数字とはお別れ。美しい3Dの砂時計とホワイトノイズが、没入型の集中空間を作ります。",
+                "heroDesc": "退屈な数字とはお別れ。美しい3Dの砂時計と専用のホワイトノイズが、没入型の集中空間を作ります。",
                 "vidMobile": "📱 モバイルデモ (縦)", "vidTablet": "💻 タブレットデモ (横)", "closeVid": "閉じる ✕", "scanQr": "スキャンしてDL",
                 "f1Title": "🎨 3Dデジタルアート", "f1Desc": "夢のようなユニコーンからクリスタルクジラまで、多彩なアート砂時計を集めてデスクトップを美しく。",
                 "f2Title": "🧘 究極のフロー状態", "f2Desc": "ZenモードでUIを非表示。砂の流れに集中し、すべての気を散らすものを排除。",
@@ -233,7 +239,7 @@
                 "f4Title": "⏳ 柔軟な時間管理", "f4Desc": "1〜999分で自由に設定。正確なバックグラウンド実行をサポート。",
                 "f5Title": "✨ タイマー非表示 & 禅語 (Pro)", "f5Desc": "数字の焦りから解放。タイマーを隠し、禅語を表示。好きな言葉のカスタマイズも可能。",
                 "f6Title": "⛈️ 雷雨シンクロエフェクト (Pro)", "f6Desc": "没入型天候エフェクト。雷と雨の音が完璧にシンクロする究極の体験。",
-                "privacy": "プライバシーポリシー", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/ja_badge_web_generic.png"
+                "privacy": "プライバシーポリシー", "contact": "お問い合わせ", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/ja_badge_web_generic.png"
             },
             "ko": {
                 "screenshot": "screenshot_ko.jpg",
@@ -244,9 +250,9 @@
                 "f2Title": "🧘 극강의 몰입 상태", "f2Desc": "Zen 모드를 켜면 UI가 숨겨집니다. 흐르는 모래에 집중하고 모든 방해 요소를 차단하세요.",
                 "f3Title": "🎶 감각적인 경험", "f3Desc": "고품질 백색 소음과 섬세한 진동 피드백이 집중을 하나의 의식으로 만듭니다.",
                 "f4Title": "⏳ 유연한 시간 설정", "f4Desc": "1-999분 설정. 정확한 백그라운드 실행을 지원합니다.",
-                "f5Title": "✨ 타이머 숨기기 & 명언 (Pro)", "f5Desc": "숫자 강박에서 벗어나세요. 타이머를 숨기고 명언을 띄웁니다. 나만의 명언 커스텀 지원.",
+                "f5Title": "✨ 명언 & 타이머 숨기기 (Pro)", "f5Desc": "숫자 강박에서 벗어나세요. 타이머를 숨기고 명언을 띄웁니다. 나만의 명언 커스텀 지원.",
                 "f6Title": "⛈️ 날씨 싱크 효과 (Pro)", "f6Desc": "몰입형 날씨 동기화. 번개 번쩍임과 빗소리의 완벽한 조화를 경험하세요.",
-                "privacy": "개인정보 처리방침", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/ko_badge_web_generic.png"
+                "privacy": "개인정보 처리방침", "contact": "문의하기", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/ko_badge_web_generic.png"
             }
         };
 
