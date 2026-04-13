@@ -59,23 +59,50 @@
             flex-direction: column; align-items: center; gap: 15px;
             animation: fadeIn 0.5s ease;
         }
-        .video-container {
-            overflow: hidden; background: #000; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            border: 4px solid #fff; border-radius: 20px;
-            display: inline-block; line-height: 0;
-        }
-        .video-viewport.vertical video { height: 70vh; width: auto; max-width: 90vw; }
-        .video-viewport.horizontal video { width: 90vw; max-width: 900px; height: auto; }
         
-        /* 核心修复：will-change 和 translateZ 强制唤醒 Edge GPU 渲染层 */
+        .video-container {
+            overflow: hidden; 
+            background: #000; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border: 4px solid #fff; 
+            border-radius: 20px;
+            display: inline-block;
+            line-height: 0;
+            position: relative;
+        }
+        
+        /* 竖屏：高度优先 */
+        .video-viewport.vertical .video-container {
+            height: 70vh;
+            width: calc(70vh * 9 / 16);
+        }
+        
+        /* 横屏：宽度优先 */
+        .video-viewport.horizontal .video-container {
+            width: 90vw;
+            max-width: 900px;
+            height: calc(min(90vw, 900px) * 9 / 16);
+        }
+        
+        /* iframe 填满容器 */
+        .video-container iframe {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
         video { 
-            display: block; 
+            display: block;
+            width: 100%;
+            height: 100%;
             object-fit: contain; 
             will-change: transform;
             transform: translateZ(0);
             backface-visibility: hidden;
             -webkit-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            transform: translate3d(0, 0, 0);
         }
 
         .video-close-btn {
@@ -108,7 +135,14 @@
             .hero { flex-direction: column; text-align: center; }
             .hero-text h1 { font-size: 32px; }
             .demo-tabs { flex-direction: column; align-items: center; }
-            .video-viewport.vertical video { height: 60vh; }
+            .video-viewport.vertical .video-container { 
+                height: 60vh;
+                width: calc(60vh * 9 / 16);
+            }
+            .video-viewport.horizontal .video-container {
+                width: 95vw;
+                height: calc(95vw * 9 / 16);
+            }
         }
     </style>
 </head>
@@ -131,7 +165,7 @@
             <p data-i18n="heroDesc">Say goodbye to boring digits. Stunning 3D aesthetic hourglasses with exclusive deep-sea white noise create a zero-distraction focus space for you.</p>
             <div class="download-area">
                 <a href="https://play.google.com/store/apps/details?id=com.siteflare.hourglass" target="_blank" class="play-badge">
-                    <img id="playBadgeImg" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png">
+                    <img id="playBadgeImg" src="" alt="Get it on Google Play">
                 </a>
                 <div class="qr-box">
                     <img src="qrcode.png" onerror="this.style.display='none'">
@@ -144,21 +178,17 @@
         </div>
     </section>
 
-    <!-- 演示区 -->
     <section class="demo-section">
         <div class="demo-tabs">
             <button class="tab-btn" onclick="toggleVideo('vertical')" data-i18n="vidMobile">📱 Mobile Demo (Portrait)</button>
             <button class="tab-btn" onclick="toggleVideo('horizontal')" data-i18n="vidTablet">💻 Tablet Demo (Landscape)</button>
         </div>
         <div id="videoViewport" class="video-viewport">
-            <div class="video-container">
-                <video id="player" playsinline loop preload="auto"></video>
-            </div>
+            <div class="video-container" id="videoContainer"></div>
             <button class="video-close-btn" onclick="hideVideo()" data-i18n="closeVid">Close Demo ✕</button>
         </div>
     </section>
 
-    <!-- 特性卡片 -->
     <section class="features">
         <div class="feature-card">
             <h3 data-i18n="f1Title">🎨 3D Digital Art</h3>
@@ -195,9 +225,15 @@
     </footer>
 
     <script>
-        const sources = {
-            'vertical': 'https://www.siteflare.de5.net/api/public/dl/H28ZnnW3/Screenrecorder-2026-04-13-07-53-23-461.mp4',
-            'horizontal': 'https://www.siteflare.de5.net/api/public/dl/JgOv90hk/Screenrecorder-2026-04-13-07-54-57-966.mp4'
+        const videoSources = {
+            'vertical': {
+                youtube: 'tYmPDWBYR4U',
+                mp4: 'https://www.siteflare.de5.net/api/public/dl/H28ZnnW3/Screenrecorder-2026-04-13-07-53-23-461.mp4'
+            },
+            'horizontal': {
+                youtube: 'LbEwsxyWIBs',
+                mp4: 'https://www.siteflare.de5.net/api/public/dl/JgOv90hk/Screenrecorder-2026-04-13-07-54-57-966.mp4'
+            }
         };
 
         const translations = {
@@ -212,7 +248,8 @@
                 "f4Title": "⏳ Flexible Timer", "f4Desc": "Set any time from 1-999 mins. Supports lock screen notifications and precise background tracking.",
                 "f5Title": "✨ Hide Timer & Zen Quotes (Pro)", "f5Desc": "Say goodbye to digital anxiety. Hide the ticking digits and display calming Zen quotes. Customize your own mottos.",
                 "f6Title": "⛈️ Synced Weather Effects (Pro)", "f6Desc": "Unique weather-synced experience. Rain and lightning sounds are perfectly synchronized for ultimate immersion.",
-                "privacy": "Privacy Policy", "contact": "Contact Us", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                "privacy": "Privacy Policy", "contact": "Contact Us",
+                "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
             },
             "zh-CN": {
                 "screenshot": "screenshot_zh-CN.jpg",
@@ -225,7 +262,8 @@
                 "f4Title": "⏳ 灵活时间掌控", "f4Desc": "1-999 分钟随心设定，智能记录您的专属习惯。支持锁屏通知与后台精确运行。",
                 "f5Title": "✨ 隐藏计时 & 专属禅语 (Pro)", "f5Desc": "告别数字焦虑。支持隐藏倒计时滴答，浮现宁静禅语。支持自定义箴言，让每一次专注都成为心灵对话。",
                 "f6Title": "⛈️ 声光联动拟真特效(Pro)", "f6Desc": "独创天气联动体验。当屏幕闪过雷电，雨声与闪电完美同步交织，带给您极具穿透力的沉浸式视听享受。",
-                "privacy": "隐私政策", "contact": "联系我们", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/zh-cn_badge_web_generic.png"
+                "privacy": "隐私政策", "contact": "联系我们",
+                "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/zh-cn_badge_web_generic.png"
             },
             "zh-TW": {
                 "screenshot": "screenshot_zh-TW.jpg",
@@ -238,7 +276,8 @@
                 "f4Title": "⏳ 靈活時間掌控", "f4Desc": "1-999 分鐘隨心設定，智能記錄您的專屬習慣。支援鎖屏通知與後台精確運行。",
                 "f5Title": "✨ 隱藏計時 & 專屬禪語 (Pro)", "f5Desc": "告別數字焦慮。支援隱藏倒計時滴答，浮現寧靜禪語。支援自訂箴言，讓每一次專注都成為心靈對話。",
                 "f6Title": "⛈️ 聲光聯動擬真特效(Pro)", "f6Desc": "獨創天氣聯動體驗。當螢幕閃過雷電，雨聲與閃電完美同步交織，帶給您極具穿透力的沉浸式視聽享受。",
-                "privacy": "隱私政策", "contact": "聯繫我們", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/zh-tw_badge_web_generic.png"
+                "privacy": "隱私政策", "contact": "聯繫我們",
+                "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/zh-tw_badge_web_generic.png"
             },
             "ja": {
                 "screenshot": "screenshot_jp.jpg",
@@ -251,7 +290,8 @@
                 "f4Title": "⏳ 柔軟な時間管理", "f4Desc": "1〜999分で自由に設定。正確なバックグラウンド実行をサポート。",
                 "f5Title": "✨ タイマー非表示 & 禅語 (Pro)", "f5Desc": "数字の焦りから解放。タイマーを隠し、禅語を表示。好きな言葉のカスタマイズも可能。",
                 "f6Title": "⛈️ 雷雨シンクロエフェクト (Pro)", "f6Desc": "没入型天候エフェクト。雷と雨の音が完璧にシンクロする究極の体験。",
-                "privacy": "プライバシーポリシー", "contact": "お問い合わせ", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/ja_badge_web_generic.png"
+                "privacy": "プライバシーポリシー", "contact": "お問い合わせ",
+                "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/ja_badge_web_generic.png"
             },
             "ko": {
                 "screenshot": "screenshot_ko.jpg",
@@ -264,50 +304,151 @@
                 "f4Title": "⏳ 유연한 시간 설정", "f4Desc": "1-999분 설정. 정확한 백그라운드 실행을 지원합니다.",
                 "f5Title": "✨ 명언 & 타이머 숨기기 (Pro)", "f5Desc": "숫자 강박에서 벗어나세요. 타이머를 숨기고 명언을 띄웁니다. 나만의 명언 커스텀 지원.",
                 "f6Title": "⛈️ 날씨 싱크 효과 (Pro)", "f6Desc": "몰입형 날씨 동기화. 번개 번쩍임과 빗소리의 완벽한 조화를 경험하세요.",
-                "privacy": "개인정보 처리방침", "contact": "문의하기", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/ko_badge_web_generic.png"
+                "privacy": "개인정보 처리방침", "contact": "문의하기",
+                "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/ko_badge_web_generic.png"
             }
         };
 
         const viewport = document.getElementById('videoViewport');
-        const player = document.getElementById('player');
+        const container = document.getElementById('videoContainer');
+        let googleConnectionTested = false;
+        let googleAvailable = false;
+        let currentLang = 'en';
 
-        function toggleVideo(type) {
-            player.pause();
+        function testGoogleConnection() {
+            return new Promise((resolve) => {
+                const img = new Image();
+                const timeout = setTimeout(() => {
+                    img.src = '';
+                    resolve(false);
+                }, 5000);
+                
+                img.onload = () => {
+                    clearTimeout(timeout);
+                    resolve(true);
+                };
+                img.onerror = () => {
+                    clearTimeout(timeout);
+                    resolve(false);
+                };
+                
+                const testUrl = translations[currentLang].playBadge + '?' + Date.now();
+                img.src = testUrl;
+            });
+        }
+
+        async function toggleVideo(type) {
             viewport.className = 'video-viewport ' + type;
             viewport.style.display = 'flex';
-        
+            
+            if (!googleConnectionTested) {
+                googleAvailable = await testGoogleConnection();
+                googleConnectionTested = true;
+                console.log('Google connection:', googleAvailable ? 'available' : 'unavailable');
+            }
+            
+            const source = videoSources[type];
+            
+            if (googleAvailable && source.youtube) {
+                showYouTube(type, source.youtube);
+            } else {
+                showNativeVideo(type, source.mp4);
+            }
+            
             setTimeout(() => {
-                player.src = sources[type];
+                viewport.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+
+        function showYouTube(type, videoId) {
+            // 完全按照 YouTube 给的嵌入代码格式
+            const iframe = document.createElement('iframe');
+            iframe.width = '100%';
+            iframe.height = '100%';
+            iframe.src = `https://www.youtube.com/embed/${videoId}`;
+            iframe.title = type === 'vertical' ? 'portrait' : 'land';
+            iframe.frameBorder = '0';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+            iframe.allowFullscreen = true;
+            
+            container.innerHTML = '';
+            container.appendChild(iframe);
+            
+            // 3秒后检查是否出错，自动降级
+            setTimeout(() => {
+                try {
+                    // 尝试检测错误（跨域可能失败）
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+                    if (iframeDoc && (iframeDoc.body.innerText.includes('error') || 
+                        iframeDoc.body.innerHTML.includes('153'))) {
+                        throw new Error('YouTube error 153');
+                    }
+                } catch (e) {
+                    // 跨域错误或检测到错误，降级
+                    if (e.message.includes('153') || e.name === 'SecurityError') {
+                        console.log('YouTube 嵌入失败，降级到备用视频');
+                        showNativeVideo(type, videoSources[type].mp4);
+                    }
+                }
+            }, 3000);
+        }
+
+        function showNativeVideo(type, mp4Url) {
+            container.innerHTML = `<video id="nativePlayer" playsinline loop preload="auto"></video>`;
+            const player = document.getElementById('nativePlayer');
+            const isEdge = navigator.userAgent.includes('Edg');
+            
+            setTimeout(() => {
+                player.src = mp4Url;
                 player.load();
+                
+                if (isEdge) {
+                    player.style.display = 'none';
+                    void player.offsetHeight;
+                    player.style.display = 'block';
+                }
                 
                 player.oncanplay = () => {
                     player.muted = false;
                     player.volume = 0.5;
                     player.play().catch(() => {});
-                    player.oncanplay = null;
-                    
-                    // ✅ 移到这儿：确保视频加载、容器展开后再滚动
-                    viewport.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 };
-            }, 50);
+            }, isEdge ? 150 : 50);
         }
 
         function hideVideo() {
             viewport.style.display = 'none';
-            player.pause();
-            player.src = ""; // 彻底卸载，防止后台占用渲染层
+            container.innerHTML = '';
+        }
+
+        function loadPlayBadgeWithFallback(url) {
+            const img = document.getElementById('playBadgeImg');
+            img.onerror = () => {
+                console.log('Play Badge load failed, using local fallback');
+                img.src = 'en_badge_web_generic.png';
+                img.onerror = null;
+            };
+            img.src = url;
         }
 
         function changeLanguage(langCode) {
+            currentLang = langCode;
             const dict = translations[langCode] || translations["en"];
+            
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (dict[key]) el.innerHTML = dict[key];
             });
+            
             document.getElementById('phoneMockup').style.backgroundImage = `url('${dict['screenshot']}')`;
-            document.getElementById('playBadgeImg').src = dict['playBadge'];
+            
+            loadPlayBadgeWithFallback(dict['playBadge']);
+            
             localStorage.setItem('aura_lang', langCode);
             document.getElementById('langSwitcher').value = langCode;
+            
+            googleConnectionTested = false;
         }
 
         window.onload = () => {
