@@ -34,9 +34,8 @@
         .hero-text p { font-size: 18px; color: rgba(255,255,255,0.9); margin-bottom: 40px; }
         
         .download-area { display: flex; align-items: center; gap: 20px; }
-        .play-badge img { height: 60px; transition: 0.3s; }
-        /* 徽章容器预设高度防止跳动 */
         .play-badge { display: inline-block; min-height: 60px; }
+        .play-badge img { height: 60px; transition: 0.3s; }
         
         .qr-box { background: #fff; padding: 8px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; }
         .qr-box img { width: 80px; height: 80px; }
@@ -70,13 +69,21 @@
             border: 4px solid #fff; 
             border-radius: 20px;
             position: relative;
-            width: 0; height: 0;
-            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            /* 修正：使用更智能的尺寸控制 */
+            width: auto;
+            height: auto;
+            transition: opacity 0.3s ease;
         }
         
         .video-container iframe, .video-container video {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%; border: none; display: block;
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #000;
+            /* 修正：消除小黑边的核心代码 */
+            object-fit: cover; 
+            transform: scale(1.01); 
         }
 
         .video-close-btn {
@@ -97,9 +104,7 @@
         .feature-card p { font-size: 15px; color: var(--text-light); line-height: 1.7; }
 
         footer { text-align: center; padding: 40px; color: rgba(255,255,255,0.7); }
-        footer .footer-links { margin-top: 15px; }
         footer a { color: #fff; text-decoration: none; margin: 0 15px; font-size: 14px; font-weight: 500; }
-        footer a:hover { text-decoration: underline; opacity: 1; }
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -131,7 +136,6 @@
             <p data-i18n="heroDesc">Say goodbye to boring digits. Stunning 3D aesthetic hourglasses with exclusive deep-sea white noise create a zero-distraction focus space for you.</p>
             <div class="download-area">
                 <a href="https://play.google.com/store/apps/details?id=com.siteflare.hourglass" target="_blank" class="play-badge">
-                    <!-- 改进：默认直接指向根目录的本地图，防止空白 -->
                     <img id="playBadgeImg" src="en_badge_web_generic.png" alt="Get it on Google Play">
                 </a>
                 <div class="qr-box">
@@ -196,12 +200,12 @@
             'vertical': {
                 youtube: 'tYmPDWBYR4U',
                 mp4: 'https://www.siteflare.de5.net/api/public/dl/H28ZnnW3/Screenrecorder-2026-04-13-07-53-23-461.mp4',
-                defaultRatio: 9/16
+                defaultRatio: 1200/2608
             },
             'horizontal': {
                 youtube: 'LbEwsxyWIBs',
                 mp4: 'https://www.siteflare.de5.net/api/public/dl/JgOv90hk/Screenrecorder-2026-04-13-07-54-57-966.mp4',
-                defaultRatio: 16/9
+                defaultRatio: 2608/1200
             }
         };
 
@@ -244,7 +248,7 @@
                 "f3Title": "🎶 全方位感官體驗", "f3Desc": "專屬高品質背景白噪音，配合細膩的互動震動與動畫特效，讓專注充滿儀式感。",
                 "f4Title": "⏳ 靈活時間掌控", "f4Desc": "1-999 分鐘隨心設定。支援鎖屏通知與後台精確運行。",
                 "f5Title": "✨ 隱藏計時 & 專屬禪語 (Pro)", "f5Desc": "告別數字焦慮。支援隱藏倒計時滴答，浮現寧靜禪語。讓每一次專注都成為心靈對話。",
-                "f6Title": "⛈️ 聲光聯動擬真特效(Pro)", "f6Desc": "獨創天氣聯動體驗。當螢幕閃過雷電，雨聲與閃電完美同步交织，帶給您極具穿透力的沉浸式視聽享受。",
+                "f6Title": "⛈️ 聲光聯動擬真特效(Pro)", "f6Desc": "獨創天氣聯動體驗。當螢幕閃過雷電，雨聲與閃電完美同步交織，帶給您極具穿透力的沉浸式視聽享受。",
                 "privacy": "隱私政策", "contact": "聯繫我們",
                 "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/zh-tw_badge_web_generic.png"
             },
@@ -281,9 +285,9 @@
         const viewport = document.getElementById('videoViewport');
         const container = document.getElementById('videoContainer');
         const playBadgeImg = document.getElementById('playBadgeImg');
-        let googleAvailable = false; // 初始设为 false，探测成功后设为 true
+        let googleAvailable = false;
 
-        // 探测视频真实比例（不耗流量）
+        // 探测比例，并返回非常精确的小数值
         function detectVideoRatio(mp4Url, defaultRatio) {
             return new Promise((resolve) => {
                 const tempVideo = document.createElement('video');
@@ -293,7 +297,9 @@
 
                 tempVideo.onloadedmetadata = () => {
                     clearTimeout(timeout);
-                    resolve(tempVideo.videoWidth / tempVideo.videoHeight);
+                    // 修正点：不进行任何四舍五入，保留高精度比例
+                    const preciseRatio = tempVideo.videoWidth / tempVideo.videoHeight;
+                    resolve(preciseRatio);
                     tempVideo.remove();
                 };
                 tempVideo.onerror = () => {
@@ -305,15 +311,17 @@
             });
         }
 
-        function setContainerDimensions(type, ratio) {
+        // 设置容器尺寸，并启用精度修复
+        function applyPreciseRatio(type, ratio) {
+            // 修正：使用 CSS aspect-ratio 让浏览器内核处理 sub-pixel 渲染
+            container.style.aspectRatio = ratio.toString();
+
             if (type === 'vertical') {
-                const h = window.innerHeight * 0.7;
-                container.style.height = h + 'px';
-                container.style.width = (h * ratio) + 'px';
+                container.style.width = 'auto';
+                container.style.height = '70vh';
             } else {
-                const w = Math.min(window.innerWidth * 0.9, 900);
-                container.style.width = w + 'px';
-                container.style.height = (w / ratio) + 'px';
+                container.style.width = 'min(90vw, 900px)';
+                container.style.height = 'auto';
             }
         }
 
@@ -322,12 +330,16 @@
             viewport.style.display = 'flex';
             viewport.className = 'video-viewport ' + type;
             
+            // 获取真实比例
             const ratio = await detectVideoRatio(source.mp4, source.defaultRatio);
-            setContainerDimensions(type, ratio);
+            
+            // 应用比例并微调
+            applyPreciseRatio(type, ratio);
 
             if (googleAvailable) {
                 container.innerHTML = `<iframe src="https://www.youtube.com/embed/${source.youtube}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen"></iframe>`;
             } else {
+                // 修正：给 MP4 播放器也加上 scale(1.01) 消除边缘缝隙
                 container.innerHTML = `<video playsinline controls loop autoplay src="${source.mp4}"></video>`;
             }
 
@@ -339,28 +351,19 @@
         function hideVideo() {
             viewport.style.display = 'none';
             container.innerHTML = '';
-            container.style.width = '0';
-            container.style.height = '0';
+            container.style.aspectRatio = '';
         }
 
-        // 改进后的徽章加载逻辑
         function loadBadgeAndDetect(targetGoogleUrl) {
-            // 使用内存中的虚拟 Image 对象进行探测，不干扰主 UI
             const detector = new Image();
-            
             detector.onload = () => {
                 googleAvailable = true;
-                // 探测成功，才将可见图片的 src 换成 Google 的官方多语言版
                 playBadgeImg.src = targetGoogleUrl;
-                console.log("Google check passed, switching to official badge.");
             };
-            
             detector.onerror = () => {
                 googleAvailable = false;
-                // 探测失败，不做操作（继续使用 HTML 里写死的 en_badge_web_generic.png）
-                console.log("Google check failed, staying with local fallback.");
+                // 保持默认图，不切换
             };
-
             detector.src = targetGoogleUrl;
         }
 
@@ -372,7 +375,6 @@
             });
             document.getElementById('phoneMockup').style.backgroundImage = `url('${dict['screenshot']}')`;
             
-            // 切换语言时，触发对应语言徽章的探测
             loadBadgeAndDetect(dict['playBadge']);
             
             localStorage.setItem('aura_lang', langCode);
