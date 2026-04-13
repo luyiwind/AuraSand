@@ -21,6 +21,7 @@
 
         nav { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 24px; font-weight: 700; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        
         .lang-selector {
             background: rgba(255, 255, 255, 0.5); border: 1px solid rgba(255, 255, 255, 0.8);
             color: #2D3748; padding: 6px 15px; border-radius: 20px; cursor: pointer;
@@ -31,6 +32,7 @@
         .hero-text { flex: 1; max-width: 500px; animation: fadeUp 1s ease-out; }
         .hero-text h1 { font-size: 48px; color: #fff; margin-bottom: 20px; line-height: 1.2; }
         .hero-text p { font-size: 18px; color: rgba(255,255,255,0.9); margin-bottom: 40px; }
+        
         .download-area { display: flex; align-items: center; gap: 20px; }
         .play-badge img { height: 60px; transition: 0.3s; }
         .qr-box { background: #fff; padding: 8px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; }
@@ -43,7 +45,6 @@
             transition: background-image 0.5s ease;
         }
 
-        /* ⬇️ 内嵌视频演示区优化 - 比例自适应 ⬇️ */
         .demo-section { max-width: 1200px; margin: 20px auto; padding: 0 5%; text-align: center; }
         .demo-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; }
         .tab-btn {
@@ -58,44 +59,34 @@
             flex-direction: column; align-items: center; gap: 15px;
             animation: fadeIn 0.5s ease;
         }
-        
         .video-container {
             overflow: hidden; background: #000; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             border: 4px solid #fff; border-radius: 20px;
-            display: inline-block; /* 让容器随视频大小变化 */
-            line-height: 0;
+            display: inline-block; line-height: 0;
         }
-
-        /* 竖屏视频自适应：限制高度，宽度随比例 */
-        .video-viewport.vertical video {
-            height: 70vh;  /* 占屏幕高度的70% */
-            width: auto;   /* 宽度自适应比例 */
-            max-width: 90vw; 
-        }
-
-        /* 横屏视频自适应：限制宽度，高度随比例 */
-        .video-viewport.horizontal video {
-            width: 90vw;   /* 占屏幕宽度的90% */
-            max-width: 900px; /* PC端不宜过大 */
-            height: auto;  /* 高度自适应比例 */
-        }
-
-        video {
-            display: block;
-            object-fit: contain; /* 确保不裁剪 */
-        }
+        .video-viewport.vertical video { height: 70vh; width: auto; max-width: 90vw; }
+        .video-viewport.horizontal video { width: 90vw; max-width: 900px; height: auto; }
+        video { display: block; object-fit: contain; }
 
         .video-close-btn {
             background: rgba(0,0,0,0.6); color: #fff; border: none;
             padding: 8px 25px; border-radius: 20px; cursor: pointer; font-size: 14px;
         }
 
-        /* 其他通用样式 */
-        .features { max-width: 1200px; margin: 50px auto 80px; padding: 0 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .feature-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px; transition: 0.3s; backdrop-filter: blur(16px); }
-        .feature-card h3 { font-size: 20px; margin-bottom: 12px; color: var(--primary-color); }
-        .feature-card p { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+        /* 核心特性卡片网格 */
+        .features {
+            max-width: 1200px; margin: 50px auto 100px; padding: 0 5%;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
+        }
+        .feature-card {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            border-radius: 24px; padding: 30px; transition: 0.3s; backdrop-filter: blur(16px);
+        }
+        .feature-card:hover { transform: translateY(-10px); }
+        .feature-card h3 { font-size: 20px; margin-bottom: 15px; color: var(--primary-color); }
+        .feature-card p { font-size: 15px; color: var(--text-light); line-height: 1.7; }
+
         footer { text-align: center; padding: 40px; color: rgba(255,255,255,0.7); }
         footer a { color: #fff; text-decoration: none; margin: 0 10px; }
 
@@ -107,9 +98,6 @@
             .hero { flex-direction: column; text-align: center; }
             .hero-text h1 { font-size: 32px; }
             .demo-tabs { flex-direction: column; align-items: center; }
-            /* 移动端横屏视频稍微调小 */
-            .video-viewport.horizontal video { width: 95vw; }
-            /* 移动端竖屏视频高度调小，预留按钮位置 */
             .video-viewport.vertical video { height: 60vh; }
         }
     </style>
@@ -146,31 +134,44 @@
         </div>
     </section>
 
-    <!-- 演示区域 -->
+    <!-- 视频演示 -->
     <section class="demo-section">
         <div class="demo-tabs">
             <button class="tab-btn" onclick="toggleVideo('vertical')" data-i18n="vidMobile">📱 Mobile Demo (Portrait)</button>
             <button class="tab-btn" onclick="toggleVideo('horizontal')" data-i18n="vidTablet">💻 Tablet Demo (Landscape)</button>
         </div>
-
         <div id="videoViewport" class="video-viewport">
-            <div class="video-container">
-                <video id="player" playsinline loop preload="metadata">
-                    <source src="" type="video/mp4">
-                </video>
-            </div>
+            <div class="video-container"><video id="player" playsinline loop preload="metadata"><source src="" type="video/mp4"></video></div>
             <button class="video-close-btn" onclick="hideVideo()" data-i18n="closeVid">Close Demo ✕</button>
         </div>
     </section>
 
     <!-- 特性卡片 -->
     <section class="features">
-        <div class="feature-card"><h3 data-i18n="f1Title">🎨 3D Digital Art</h3><p data-i18n="f1Desc">Exquisite art hourglasses to build your desktop aesthetics.</p></div>
-        <div class="feature-card"><h3 data-i18n="f2Title">🧘 Extreme Flow State</h3><p data-i18n="f2Desc">Zero-distraction focus space with Zen mode.</p></div>
-        <div class="feature-card"><h3 data-i18n="f3Title">🎶 Sensory Experience</h3><p data-i18n="f3Desc">White noise and haptic feedback make every session a ritual.</p></div>
-        <div class="feature-card"><h3 data-i18n="f4Title">⏳ Flexible Timer</h3><p data-i18n="f4Desc">1-999 mins settings with precise background tracking.</p></div>
-        <div class="feature-card"><h3 data-i18n="f5Title">✨ Hide Countdown(Pro)</h3><p data-i18n="f5Desc">Hide the ticking digits and display Zen quotes. Supports custom mottos.</p></div>
-        <div class="feature-card"><h3 data-i18n="f6Title">⛈️ Weather Effects(Pro)</h3><p data-i18n="f6Desc">Immersive rain and lightning sound-visual sync. Experience nature.</p></div>
+        <div class="feature-card">
+            <h3 data-i18n="f1Title">🎨 3D Digital Art</h3>
+            <p data-i18n="f1Desc">From dreamy unicorns to crystal whales, collect exquisite art hourglasses to build your desktop aesthetics.</p>
+        </div>
+        <div class="feature-card">
+            <h3 data-i18n="f2Title">🧘 Extreme Flow State</h3>
+            <p data-i18n="f2Desc">Enable Zen mode for smart UI hiding. Focus entirely on the flowing sand and eliminate all distractions.</p>
+        </div>
+        <div class="feature-card">
+            <h3 data-i18n="f3Title">🎶 Sensory Experience</h3>
+            <p data-i18n="f3Desc">Exclusive high-quality white noise and haptic feedback make every focus session a ritual.</p>
+        </div>
+        <div class="feature-card">
+            <h3 data-i18n="f4Title">⏳ Flexible Timer</h3>
+            <p data-i18n="f4Desc">Set any time from 1-999 mins. Supports lock screen notifications and precise background tracking.</p>
+        </div>
+        <div class="feature-card">
+            <h3 data-i18n="f5Title">✨ Hide Countdown(Pro)</h3>
+            <p data-i18n="f5Desc">Say goodbye to digital anxiety. Hide the ticking digits and display calming Zen quotes. Customize your own mottos.</p>
+        </div>
+        <div class="feature-card">
+            <h3 data-i18n="f6Title">⛈️ Weather Effects(Pro)</h3>
+            <p data-i18n="f6Desc">Immersive rain and lightning sound-visual synchronization. Experience the peaceful power of nature.</p>
+        </div>
     </section>
 
     <footer><p>© 2026 AuraSand. <a href="https://luyiwind.github.io/Hourglass-privacy/" data-i18n="privacy">Privacy Policy</a></p></footer>
@@ -183,63 +184,68 @@
 
         const translations = {
             "en": {
-                "screenshot": "screenshot_en.jpg", "heroTitle": "Let time flow <br>into art.",
-                "heroDesc": "Say goodbye to boring digits. Stunning 3D aesthetic hourglasses create a zero-distraction focus space.",
-                "vidMobile": "📱 Mobile Demo (Portrait)", "vidTablet": "💻 Tablet Demo (Landscape)", "closeVid": "Close ✕",
-                "scanQr": "Scan to DL", "f1Title": "🎨 3D Digital Art", "f1Desc": "Exquisite art hourglasses to build your desktop aesthetics.",
-                "f2Title": "🧘 Extreme Flow", "f2Desc": "Enable Zen mode to eliminate all distractions.",
-                "f3Title": "🎶 Sensory Exp", "f3Desc": "White noise and haptics make every session a ritual.",
-                "f4Title": "⏳ Flexible Timer", "f4Desc": "1-999 mins settings with precise tracking.",
-                "f5Title": "✨ Hide Countdown(Pro)", "f5Desc": "Hide ticking digits and show Zen quotes.",
-                "f6Title": "⛈️ Weather Sync(Pro)", "f6Desc": "Immersive rain and lightning sound-visual sync.",
+                "screenshot": "screenshot_en.jpg",
+                "heroTitle": "Let time flow <br>into art.",
+                "heroDesc": "Say goodbye to boring digits. Stunning 3D aesthetic hourglasses with exclusive deep-sea white noise create a zero-distraction focus space for you.",
+                "vidMobile": "📱 Mobile Demo (Portrait)", "vidTablet": "💻 Tablet Demo (Landscape)", "closeVid": "Close ✕", "scanQr": "Scan to DL",
+                "f1Title": "🎨 3D Digital Art", "f1Desc": "From dreamy unicorns to crystal whales, collect exquisite art hourglasses to build your desktop aesthetics.",
+                "f2Title": "🧘 Extreme Flow State", "f2Desc": "Enable Zen mode for smart UI hiding. Focus entirely on the flowing sand and eliminate all distractions.",
+                "f3Title": "🎶 Sensory Experience", "f3Desc": "Exclusive high-quality white noise and haptic feedback make every focus session a ritual.",
+                "f4Title": "⏳ Flexible Timer", "f4Desc": "Set any time from 1-999 mins. Supports lock screen notifications and precise background tracking.",
+                "f5Title": "✨ Hide Timer & Zen Quotes (Pro)", "f5Desc": "Say goodbye to digital anxiety. Hide the ticking digits and display calming Zen quotes. Customize your own mottos.",
+                "f6Title": "⛈️ Synced Weather Effects (Pro)", "f6Desc": "Unique weather-synced experience. Rain and lightning sounds are perfectly synchronized for ultimate immersion.",
                 "privacy": "Privacy Policy", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
             },
             "zh-CN": {
-                "screenshot": "screenshot_zh-CN.jpg", "heroTitle": "让时间，<br>流动成艺术。",
+                "screenshot": "screenshot_zh-CN.jpg",
+                "heroTitle": "让时间，<br>流动成艺术。",
                 "heroDesc": "告别枯燥的数字。绝美 3D 质感动态沙漏，配合专属深海白噪音，为您打造零干扰的沉浸式专注空间。",
-                "vidMobile": "📱 手机端演示 (竖屏)", "vidTablet": "💻 平板端演示 (横屏)", "closeVid": "收起演示 ✕",
-                "scanQr": "扫码获取", "f1Title": "🎨 3D 数字潮玩", "f1Desc": "从梦幻独角兽到晶莹鲸鱼，收集风格各异的精美沙漏。",
-                "f2Title": "🧘 极致沉浸心流", "f2Desc": "开启 Zen 模式，UI 智能隐退，告别一切干扰。",
-                "f3Title": "🎶 全方位感官体验", "f3Desc": "专属高品质白噪音，配合细腻交互震动。",
-                "f4Title": "⏳ 灵活时间掌控", "f4Desc": "1-999 分钟随心设定，支持后台精确运行。",
-                "f5Title": "✨ 隐藏计时数字(Pro)", "f5Desc": "隐藏计时数字并显示禅语，支持自定义禅语。",
-                "f6Title": "⛈️ 声光联动特效(Pro)", "f6Desc": "下雨和闪电音效联动，尽享极致沉浸体验。",
+                "vidMobile": "📱 手机端演示 (竖屏)", "vidTablet": "💻 平板端演示 (横屏)", "closeVid": "收起演示 ✕", "scanQr": "扫码获取",
+                "f1Title": "🎨 3D 数字潮玩", "f1Desc": "从梦幻独角兽到晶莹鲸鱼，收集风格各异的精美艺术沙漏，打造专属桌面美学。",
+                "f2Title": "🧘 极致沉浸心流", "f2Desc": "开启 Zen 模式，UI 智能隐退。让视觉完全聚焦于流动的沙砾，告别一切干扰。",
+                "f3Title": "🎶 全方位感官体验", "f3Desc": "专属高品质背景白噪音，配合细腻的交互震动与动画特效，让专注充满仪式感。",
+                "f4Title": "⏳ 灵活时间掌控", "f4Desc": "1-999 分钟随心设定，智能记录您的专属习惯。支持锁屏通知与后台精确运行。",
+                "f5Title": "✨ 隐藏计时 & 专属禅语 (Pro)", "f5Desc": "告别数字焦虑。支持隐藏倒计时滴答，浮现宁静禅语。支持自定义箴言，让每一次专注都成为心灵对话。",
+                "f6Title": "⛈️ 声光联动拟真特效(Pro)", "f6Desc": "独创天气联动体验。当屏幕闪过雷电，雨声与闪电完美同步交织，带给您极具穿透力的沉浸式视听享受。",
                 "privacy": "隐私政策", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/zh-cn_badge_web_generic.png"
             },
             "zh-TW": {
-                "screenshot": "screenshot_zh-TW.jpg", "heroTitle": "讓時間，<br>流動成藝術。",
-                "heroDesc": "告別枯燥的數字。絕美 3D 質感動態沙漏，為您打造零干擾的沉浸式專注空間。",
-                "vidMobile": "📱 手機端演示 (豎屏)", "vidTablet": "💻 平板端演示 (橫屏)", "closeVid": "收起演示 ✕",
-                "scanQr": "掃碼獲取", "f1Title": "🎨 3D 數位潮玩", "f1Desc": "收集風格各異的精美藝術沙漏。",
-                "f2Title": "🧘 極致沉浸心流", "f2Desc": "開啟 Zen 模式，告別一切干擾。",
-                "f3Title": "🎶 全方位感官體驗", "f3Desc": "專屬高品質背景白噪音，配合細膩互動震動。",
-                "f4Title": "⏳ 靈活時間掌控", "f4Desc": "1-999 分鐘隨心設定，支援後台精確運行。",
-                "f5Title": "✨ 隱藏計時數字(Pro)", "f5Desc": "隱藏計時數字並顯示禪語，支援自訂。",
-                "f6Title": "⛈️ 聲光聯動特效(Pro)", "f6Desc": "下雨和閃電音效聯動，盡享沉浸體驗。",
+                "screenshot": "screenshot_zh-TW.jpg",
+                "heroTitle": "讓時間，<br>流動成藝術。",
+                "heroDesc": "告別枯燥的數字。絕美 3D 質感動態沙漏，配合專屬深海白噪音，為您打造零干擾的沉浸式專注空間。",
+                "vidMobile": "📱 手機端演示 (豎屏)", "vidTablet": "💻 平板端演示 (橫屏)", "closeVid": "收起演示 ✕", "scanQr": "掃碼獲取",
+                "f1Title": "🎨 3D 數位潮玩", "f1Desc": "從夢幻獨角獸到晶瑩鯨魚，收集風格各異的精美藝術沙漏，打造專屬桌面美學。",
+                "f2Title": "🧘 極致沉浸心流", "f2Desc": "開啟 Zen 模式，UI 智能隱退。讓視覺完全聚焦於流動的沙礫，告別一切干擾。",
+                "f3Title": "🎶 全方位感官體驗", "f3Desc": "專屬高品質背景白噪音，配合細膩的互動震動與動畫特效，讓專注充滿儀式感。",
+                "f4Title": "⏳ 靈活時間掌控", "f4Desc": "1-999 分鐘隨心設定，智能記錄您的專屬習慣。支援鎖屏通知與後台精確運行。",
+                "f5Title": "✨ 隱藏計時 & 專屬禪語 (Pro)", "f5Desc": "告別數字焦慮。支援隱藏倒計時滴答，浮現寧靜禪語。支援自訂箴言，讓每一次專注都成為心靈對話。",
+                "f6Title": "⛈️ 聲光聯動擬真特效(Pro)", "f6Desc": "獨創天氣聯動體驗。當螢幕閃過雷電，雨聲與閃電完美同步交織，帶給您極具穿透力的沉浸式視聽享受。",
                 "privacy": "隱私政策", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/zh-tw_badge_web_generic.png"
             },
             "ja": {
-                "screenshot": "screenshot_jp.jpg", "heroTitle": "時間を、<br>芸術に。",
+                "screenshot": "screenshot_jp.jpg",
+                "heroTitle": "時間を、<br>芸術に。",
                 "heroDesc": "退屈な数字とはお別れ。美しい3Dの砂時計とホワイトノイズが、没入型の集中空間を作ります。",
-                "vidMobile": "📱 モバイルデモ (縦)", "vidTablet": "💻 タブレットデモ (横)", "closeVid": "閉じる ✕",
-                "scanQr": "スキャンしてDL", "f1Title": "🎨 3D デジタルアート", "f1Desc": "多彩な砂時計を収集。",
-                "f2Title": "🧘 究極のフロー", "f2Desc": "ZenモードでUIを非表示。砂の流れに集中。",
-                "f3Title": "🎶 全感覚体験", "f3Desc": "高品質なホワイトノイズと繊細な振動体験。",
-                "f4Title": "⏳ 柔軟なタイマー", "f4Desc": "1〜999分で自由に設定。",
-                "f5Title": "✨ タイマー非表示(Pro)", "f5Desc": "タイマーを隠し、落ち着く禅語を表示。",
-                "f6Title": "⛈️ 雷雨シンクロ(Pro)", "f6Desc": "雷と雨の音が完璧にシンクロする究极の体験。",
+                "vidMobile": "📱 モバイルデモ (縦)", "vidTablet": "💻 タブレットデモ (横)", "closeVid": "閉じる ✕", "scanQr": "スキャンしてDL",
+                "f1Title": "🎨 3Dデジタルアート", "f1Desc": "夢のようなユニコーンからクリスタルクジラまで、多彩なアート砂時計を集めてデスクトップを美しく。",
+                "f2Title": "🧘 究極のフロー状態", "f2Desc": "ZenモードでUIを非表示。砂の流れに集中し、すべての気を散らすものを排除。",
+                "f3Title": "🎶 五感体験", "f3Desc": "高品質なホワイトノイズと繊細な振動・エフェクトが、集中を一つの儀式にします。",
+                "f4Title": "⏳ 柔軟な時間管理", "f4Desc": "1〜999分で自由に設定。正確なバックグラウンド実行をサポート。",
+                "f5Title": "✨ タイマー非表示 & 禅語 (Pro)", "f5Desc": "数字の焦りから解放。タイマーを隠し、禅語を表示。好きな言葉のカスタマイズも可能。",
+                "f6Title": "⛈️ 雷雨シンクロエフェクト (Pro)", "f6Desc": "没入型天候エフェクト。雷と雨の音が完璧にシンクロする究極の体験。",
                 "privacy": "プライバシーポリシー", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/ja_badge_web_generic.png"
             },
             "ko": {
-                "screenshot": "screenshot_ko.jpg", "heroTitle": "시간을<br>예술로 만들다.",
-                "heroDesc": "지루한 숫자와 작별하세요. 아름다운 3D 모래시계가 집중 공간을 만듭니다.",
-                "vidMobile": "📱 모바일 데모 (세로)", "vidTablet": "💻 태블릿 데모 (가로)", "closeVid": "닫기 ✕",
-                "scanQr": "스캔하여 다운로드", "f1Title": "🎨 3D 디지털 아트", "f1Desc": "예술적인 모래시계 수집.",
-                "f2Title": "🧘 극강의 몰입", "f2Desc": "Zen 모드를 켜면 UI가 숨겨집니다.",
-                "f3Title": "🎶 감각적인 경험", "f3Desc": "백색 소음과 섬세한 진동 피드백.",
-                "f4Title": "⏳ 유연한 시간 설정", "f4Desc": "1-999분 설정 지원.",
-                "f5Title": "✨ 타이머 숨기기(Pro)", "f5Desc": "타이머를 숨기고 명언을 띄웁니다.",
-                "f6Title": "⛈️ 날씨 싱크 효과(Pro)", "f6Desc": "번개와 빗소리의 완벽한 조화.",
+                "screenshot": "screenshot_ko.jpg",
+                "heroTitle": "시간을<br>예술로 만들다.",
+                "heroDesc": "지루한 숫자와 작별하세요. 아름다운 3D 모래시계와 심해 백색 소음이 방해 없는 집중 공간을 만듭니다.",
+                "vidMobile": "📱 모바일 데모 (세로)", "vidTablet": "💻 태블릿 데모 (가로)", "closeVid": "닫기 ✕", "scanQr": "다운로드 스캔",
+                "f1Title": "🎨 3D 디지털 아트", "f1Desc": "유니콘부터 고래까지, 다양한 예술적인 모래시계를 수집하여 나만의 데스크탑 미학을 만드세요.",
+                "f2Title": "🧘 극강의 몰입 상태", "f2Desc": "Zen 모드를 켜면 UI가 숨겨집니다. 흐르는 모래에 집중하고 모든 방해 요소를 차단하세요.",
+                "f3Title": "🎶 감각적인 경험", "f3Desc": "고품질 백색 소음과 섬세한 진동 피드백이 집중을 하나의 의식으로 만듭니다.",
+                "f4Title": "⏳ 유연한 시간 설정", "f4Desc": "1-999분 설정. 정확한 백그라운드 실행을 지원합니다.",
+                "f5Title": "✨ 타이머 숨기기 & 명언 (Pro)", "f5Desc": "숫자 강박에서 벗어나세요. 타이머를 숨기고 명언을 띄웁니다. 나만의 명언 커스텀 지원.",
+                "f6Title": "⛈️ 날씨 싱크 효과 (Pro)", "f6Desc": "몰입형 날씨 동기화. 번개 번쩍임과 빗소리의 완벽한 조화를 경험하세요.",
                 "privacy": "개인정보 처리방침", "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/ko_badge_web_generic.png"
             }
         };
@@ -261,7 +267,6 @@
         function hideVideo() {
             viewport.style.display = 'none';
             player.pause();
-            player.src = "";
         }
 
         function changeLanguage(langCode) {
