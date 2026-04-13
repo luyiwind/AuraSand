@@ -35,6 +35,9 @@
         
         .download-area { display: flex; align-items: center; gap: 20px; }
         .play-badge img { height: 60px; transition: 0.3s; }
+        /* 徽章容器预设高度防止跳动 */
+        .play-badge { display: inline-block; min-height: 60px; }
+        
         .qr-box { background: #fff; padding: 8px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; }
         .qr-box img { width: 80px; height: 80px; }
 
@@ -128,7 +131,8 @@
             <p data-i18n="heroDesc">Say goodbye to boring digits. Stunning 3D aesthetic hourglasses with exclusive deep-sea white noise create a zero-distraction focus space for you.</p>
             <div class="download-area">
                 <a href="https://play.google.com/store/apps/details?id=com.siteflare.hourglass" target="_blank" class="play-badge">
-                    <img id="playBadgeImg" src="" alt="Get it on Google Play">
+                    <!-- 改进：默认直接指向根目录的本地图，防止空白 -->
+                    <img id="playBadgeImg" src="en_badge_web_generic.png" alt="Get it on Google Play">
                 </a>
                 <div class="qr-box">
                     <img src="qrcode.png" onerror="this.style.display='none'">
@@ -192,12 +196,12 @@
             'vertical': {
                 youtube: 'tYmPDWBYR4U',
                 mp4: 'https://www.siteflare.de5.net/api/public/dl/H28ZnnW3/Screenrecorder-2026-04-13-07-53-23-461.mp4',
-                defaultRatio: 1/2.17
+                defaultRatio: 9/16
             },
             'horizontal': {
                 youtube: 'LbEwsxyWIBs',
                 mp4: 'https://www.siteflare.de5.net/api/public/dl/JgOv90hk/Screenrecorder-2026-04-13-07-54-57-966.mp4',
-                defaultRatio: 2.17/1
+                defaultRatio: 16/9
             }
         };
 
@@ -240,7 +244,7 @@
                 "f3Title": "🎶 全方位感官體驗", "f3Desc": "專屬高品質背景白噪音，配合細膩的互動震動與動畫特效，讓專注充滿儀式感。",
                 "f4Title": "⏳ 靈活時間掌控", "f4Desc": "1-999 分鐘隨心設定。支援鎖屏通知與後台精確運行。",
                 "f5Title": "✨ 隱藏計時 & 專屬禪語 (Pro)", "f5Desc": "告別數字焦慮。支援隱藏倒計時滴答，浮現寧靜禪語。讓每一次專注都成為心靈對話。",
-                "f6Title": "⛈️ 聲光聯動擬真特效(Pro)", "f6Desc": "獨創天氣聯動體驗。當螢幕閃過雷電，雨聲與閃電完美同步交織，帶給您極具穿透力的沉浸式視聽享受。",
+                "f6Title": "⛈️ 聲光聯動擬真特效(Pro)", "f6Desc": "獨創天氣聯動體驗。當螢幕閃過雷電，雨聲與閃電完美同步交织，帶給您極具穿透力的沉浸式視聽享受。",
                 "privacy": "隱私政策", "contact": "聯繫我們",
                 "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/zh-tw_badge_web_generic.png"
             },
@@ -277,9 +281,9 @@
         const viewport = document.getElementById('videoViewport');
         const container = document.getElementById('videoContainer');
         const playBadgeImg = document.getElementById('playBadgeImg');
-        let googleAvailable = true;
+        let googleAvailable = false; // 初始设为 false，探测成功后设为 true
 
-        // 利用 MP4 探测视频真实比例（不耗流量）
+        // 探测视频真实比例（不耗流量）
         function detectVideoRatio(mp4Url, defaultRatio) {
             return new Promise((resolve) => {
                 const tempVideo = document.createElement('video');
@@ -301,7 +305,6 @@
             });
         }
 
-        // 统一尺寸设置
         function setContainerDimensions(type, ratio) {
             if (type === 'vertical') {
                 const h = window.innerHeight * 0.7;
@@ -319,13 +322,9 @@
             viewport.style.display = 'flex';
             viewport.className = 'video-viewport ' + type;
             
-            // 1. 探测比例
             const ratio = await detectVideoRatio(source.mp4, source.defaultRatio);
-            
-            // 2. 调整容器尺寸（带平滑动画）
             setContainerDimensions(type, ratio);
 
-            // 3. 渲染视频内容
             if (googleAvailable) {
                 container.innerHTML = `<iframe src="https://www.youtube.com/embed/${source.youtube}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen"></iframe>`;
             } else {
@@ -344,15 +343,25 @@
             container.style.height = '0';
         }
 
-        // 徽章加载兼顾 Google 探测
-        function loadBadgeAndDetect(url) {
-            playBadgeImg.onload = () => { googleAvailable = true; };
-            playBadgeImg.onerror = () => {
-                googleAvailable = false;
-                playBadgeImg.src = 'en_badge_web_generic.png'; 
-                playBadgeImg.onerror = null;
+        // 改进后的徽章加载逻辑
+        function loadBadgeAndDetect(targetGoogleUrl) {
+            // 使用内存中的虚拟 Image 对象进行探测，不干扰主 UI
+            const detector = new Image();
+            
+            detector.onload = () => {
+                googleAvailable = true;
+                // 探测成功，才将可见图片的 src 换成 Google 的官方多语言版
+                playBadgeImg.src = targetGoogleUrl;
+                console.log("Google check passed, switching to official badge.");
             };
-            playBadgeImg.src = url;
+            
+            detector.onerror = () => {
+                googleAvailable = false;
+                // 探测失败，不做操作（继续使用 HTML 里写死的 en_badge_web_generic.png）
+                console.log("Google check failed, staying with local fallback.");
+            };
+
+            detector.src = targetGoogleUrl;
         }
 
         function changeLanguage(langCode) {
@@ -362,7 +371,10 @@
                 if (dict[key]) el.innerHTML = dict[key];
             });
             document.getElementById('phoneMockup').style.backgroundImage = `url('${dict['screenshot']}')`;
+            
+            // 切换语言时，触发对应语言徽章的探测
             loadBadgeAndDetect(dict['playBadge']);
+            
             localStorage.setItem('aura_lang', langCode);
             document.getElementById('langSwitcher').value = langCode;
         }
