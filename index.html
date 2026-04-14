@@ -58,7 +58,7 @@
 
         /* 手机模拟器框架样式 */
         .live-viewport {
-            display: flex;
+            display: none; /* 初始隐藏 */
             flex-direction: column;
             align-items: center;
             padding: 20px 0;
@@ -66,9 +66,7 @@
         }
         
         .phone-frame-mockup {
-            width: 100%;
-            max-width: 402px; /* 匹配 iPhone 16 Pro 逻辑宽度 */
-            aspect-ratio: 402 / 874; /* 强制锁定 iPhone 16 Pro 比例 */
+            /* 宽高将由 JavaScript 动态设置 */
             background: #111;
             border: 10px solid #222; /* 模拟手机中框 */
             border-radius: 45px; /* 模拟圆角屏 */
@@ -76,6 +74,7 @@
             position: relative;
             overflow: hidden;
             transform: translateZ(0);
+            transition: width 0.3s ease, height 0.3s ease; /* 增加平滑过渡 */
         }
         
         .phone-inner {
@@ -388,8 +387,37 @@
             }
         }
 
+        function adjustLiveDemoSize() {
+            const mockup = document.querySelector('.phone-frame-mockup');
+            const viewport = document.getElementById('liveDemoViewport');
+            
+            if (!mockup || viewport.style.display === 'none') return;
+        
+            const ratio = 402 / 874; // iPhone 16 Pro 比例
+            
+            // 计算最大允许高度：屏幕高度的 70%
+            let targetH = window.innerHeight * 0.7;
+            let targetW = targetH * ratio;
+        
+            // 检查宽度是否溢出屏幕 (预留左右各 10% 边距)
+            const maxW = window.innerWidth * 0.9;
+            if (targetW > maxW) {
+                targetW = maxW;
+                targetH = targetW / ratio;
+            }
+        
+            // 限制最大逻辑宽度为 402px，避免在超大屏幕上显得过大
+            if (targetW > 402) {
+                targetW = 402;
+                targetH = targetW / ratio;
+            }
+        
+            mockup.style.width = Math.round(targetW) + 'px';
+            mockup.style.height = Math.round(targetH) + 'px';
+        }
+        
+        // 2. 修改加载函数
         function loadLiveDemo() {
-            // 隐藏视频预览，显示 Live Demo
             hideVideo();
             const viewport = document.getElementById('liveDemoViewport');
             const iframe = document.getElementById('flutterIframe');
@@ -398,7 +426,9 @@
             
             viewport.style.display = 'flex';
             
-            // 只有在 iframe 没加载时才设置 src，避免重复加载
+            // 动态调整尺寸
+            adjustLiveDemoSize();
+            
             if (iframe.src !== FLUTTER_APP_URL) {
                 iframe.src = FLUTTER_APP_URL;
                 iframe.onload = () => {
@@ -406,15 +436,21 @@
                 };
             }
         
-            // 自动滚动到预览区域
             setTimeout(() => {
                 viewport.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 100);
         }
-
+        
+        // 3. 监听窗口缩放，实时调整
+        window.addEventListener('resize', adjustLiveDemoSize);
+        
+        // 修改原有的 hideLiveDemo 增加清理逻辑
         function hideLiveDemo() {
             const viewport = document.getElementById('liveDemoViewport');
+            const iframe = document.getElementById('flutterIframe');
             viewport.style.display = 'none';
+            // 可选：隐藏时清空 iframe 释放内存，如果需要保持状态则注释掉下面一行
+            // iframe.src = ""; 
         }
 
         async function toggleVideo(type) {
