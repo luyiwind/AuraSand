@@ -599,6 +599,7 @@
             const phoneMockup = document.getElementById('phoneMockup');
             
             let googleAvailable = false;
+            let currentVideoType = null; // 记录当前显示的视频类型
             const FLUTTER_APP_URL = "https://aurasand.pages.dev/";
 
             // 辅助函数：关闭所有演示
@@ -608,6 +609,7 @@
                 container.innerHTML = '';
                 container.style.width = '0';
                 container.style.height = '0';
+                currentVideoType = null;
                 // 隐藏live
                 liveViewport.style.display = 'none';
                 flutterIframe.src = "";
@@ -698,6 +700,7 @@
 
             window.toggleVideo = async function(type) {
                 closeAllDemos();
+                currentVideoType = type; // 记录当前类型
                 const source = videoSources[type];
                 viewport.style.display = 'flex';
                 
@@ -706,7 +709,10 @@
                 
                 // 异步获取真实比例后重新调整
                 detectVideoRatio(source.mp4, source.defaultRatio).then(realRatio => {
-                    applyVideoSize(type, realRatio);
+                    // 确保当前还是同一种视频类型
+                    if (currentVideoType === type) {
+                        applyVideoSize(type, realRatio);
+                    }
                 });
 
                 if (googleAvailable) {
@@ -723,6 +729,7 @@
                 container.innerHTML = '';
                 container.style.width = '0';
                 container.style.height = '0';
+                currentVideoType = null;
             };
 
             window.loadLiveDemo = function() {
@@ -765,14 +772,10 @@
                 adjustLiveDemoSize();
                 
                 // 如果视频正在显示，重新调整其尺寸
-                if (viewport.style.display === 'flex' && container.children.length > 0) {
-                    const currentType = container.querySelector('video, iframe')?.tagName ? 
-                        (container.offsetHeight > container.offsetWidth ? 'vertical' : 'horizontal') : 
-                        'vertical';
-                    
-                    const source = videoSources[currentType];
+                if (viewport.style.display === 'flex' && currentVideoType) {
+                    const source = videoSources[currentVideoType];
                     if (source) {
-                        applyVideoSize(currentType, source.defaultRatio);
+                        applyVideoSize(currentVideoType, source.defaultRatio);
                     }
                 }
             });
