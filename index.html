@@ -1,3 +1,5 @@
+--- START OF FILE Paste April 16, 2026 - 1:10PM ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -200,8 +202,11 @@
             transform: translateZ(0);
             transition: width 0.3s ease, height 0.3s ease;
             margin: 0 auto;
-            max-width: 100%;           /* 关键修复：防止超出屏幕 */
-            box-sizing: content-box;   /* 让边框不影响内容宽度计算 */
+            max-width: 95%;           /* 关键修复：防止超出屏幕 */
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         /* 视频内部填充 */
@@ -214,6 +219,7 @@
             border: none; 
             display: block;
             background: #000;
+            object-fit: cover;
         }
 
         .phone-inner {
@@ -579,9 +585,9 @@
                     "vidMobile": "📱 모바일 데모", "vidTablet": "💻 태블릿 데모", "liveDemo": "✨ 라이브 데모", "closeVid": "닫기 ✕", "scanQr": "다운로드 스캔",
                     "f1Title": "🎨 3D 디지털 아트", "f1Desc": "유니콘부터 고래까지, 다양한 예술적인 모래시계를 수집하여 나만의 데스크탑 미학을 만드세요.",
                     "f2Title": "🧘 극강의 몰입 상태", "f2Desc": "Zen 모드를 켜면 UI가 숨겨집니다. 흐르는 모래에 집중하고 모든 방해 요소를 차단하세요.",
-                    "f3Title": "🎶 감각적인 경험", "f3Desc": "고품질 백색 소음과 섬세한 진동 피드백이 집중을 하나의 의식으로 만듭니다.",
+                    "f3Title": "🎶 감각적인 경험", "f3Desc": "고품질 백색 소음과 섬세한 진동 피드백이 집중을 하나의 의식으로 만듭니다。",
                     "f4Title": "⏳ 유연한 시간 설정", "f4Desc": "1-999분 설정. 정확한 백그라운드 실행을 지원합니다.",
-                    "f5Title": "✨ 명언 & 타이머 숨기기 (Pro)", "f5Desc": "숫자 강박에서 벗어나세요. 타이머를 숨기고 명언을 띄웁니다. 나만의 명언 커스텀 지원.",
+                    "f5Title": "✨ 명언 & 타이머 숨기기 (Pro)", "f5Desc": "숫자 강박에서 벗어나세요. 타이머를 숨기고 명언을 띄웁니다. 나만의 명언 커斯텀 지원.",
                     "f6Title": "⛈️ 날씨 싱크 효과 (Pro)", "f6Desc": "몰입형 날씨 동기화. 번개 번쩍임과 빗소리의 완벽한 조화를 경험하세요.",
                     "privacy": "개인정보 처리방침", "contact": "문의하기",
                     "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/ko_badge_web_generic.png"
@@ -599,24 +605,20 @@
             const phoneMockup = document.getElementById('phoneMockup');
             
             let googleAvailable = false;
-            let currentVideoType = null; // 记录当前显示的视频类型
+            let currentVideoType = null; 
             const FLUTTER_APP_URL = "https://aurasand.pages.dev/";
 
-            // 辅助函数：关闭所有演示
             function closeAllDemos() {
-                // 隐藏视频
                 viewport.style.display = 'none';
                 container.innerHTML = '';
                 container.style.width = '0';
                 container.style.height = '0';
                 currentVideoType = null;
-                // 隐藏live
                 liveViewport.style.display = 'none';
                 flutterIframe.src = "";
                 flutterLoader.style.display = 'block';
             }
 
-            // 检测视频真实比例
             function detectVideoRatio(mp4Url, defaultRatio) {
                 return new Promise((resolve) => {
                     const tempVideo = document.createElement('video');
@@ -625,7 +627,8 @@
                     const timeout = setTimeout(() => resolve(defaultRatio), 3000);
                     tempVideo.onloadedmetadata = () => {
                         clearTimeout(timeout);
-                        resolve(tempVideo.videoWidth / tempVideo.videoHeight);
+                        const r = tempVideo.videoWidth / tempVideo.videoHeight;
+                        resolve(isNaN(r) ? defaultRatio : r);
                         tempVideo.remove();
                     };
                     tempVideo.onerror = () => {
@@ -637,88 +640,78 @@
                 });
             }
 
-            // 修复后的尺寸计算函数 - 确保不超出屏幕
+            // 增强后的尺寸计算函数
             function applyVideoSize(type, ratio) {
-                // 获取可用宽度（考虑内边距）
-                const maxWidth = window.innerWidth * 0.9; // 最大宽度为屏幕的90%
-                const maxHeight = window.innerHeight * 0.7; // 最大高度为屏幕的70%
+                const winW = window.innerWidth;
+                const winH = window.innerHeight;
+                const maxWidth = winW * 0.9;
+                const maxHeight = winH * 0.7;
                 
+                let finalW, finalH;
+
                 if (type === 'vertical') {
-                    // 竖屏视频：优先用高度限制
-                    let h = Math.min(maxHeight, 700);
-                    let w = h * ratio;
-                    
-                    // 如果宽度超出，用宽度反算高度
-                    if (w > maxWidth) {
-                        w = maxWidth;
-                        h = w / ratio;
+                    // 强制纠正比例：如果检测出的比例大于1（横向），则强行回归竖屏默认比例
+                    const safeRatio = (ratio > 1) ? (588 / 1280) : ratio;
+                    finalH = Math.min(maxHeight, 650);
+                    finalW = finalH * safeRatio;
+                    if (finalW > maxWidth) {
+                        finalW = maxWidth;
+                        finalH = finalW / safeRatio;
                     }
-                    
-                    container.style.height = Math.round(h) + 'px';
-                    container.style.width = Math.round(w) + 'px';
                 } else {
-                    // 横屏视频：优先用宽度限制
-                    let w = Math.min(maxWidth, 900);
-                    let h = w / ratio;
-                    
-                    // 如果高度超出，用高度反算宽度
-                    if (h > maxHeight) {
-                        h = maxHeight;
-                        w = h * ratio;
+                    // 横屏比例纠正
+                    const safeRatio = (ratio < 1) ? (1280 / 588) : ratio;
+                    finalW = Math.min(maxWidth, 900);
+                    finalH = finalW / safeRatio;
+                    if (finalH > maxHeight) {
+                        finalH = maxHeight;
+                        finalW = finalH * safeRatio;
                     }
-                    
-                    container.style.width = Math.round(w) + 'px';
-                    container.style.height = Math.round(h) + 'px';
                 }
+                
+                container.style.width = Math.round(finalW) + 'px';
+                container.style.height = Math.round(finalH) + 'px';
             }
 
-            // 调整live demo尺寸
             function adjustLiveDemoSize() {
                 if (!liveMockup || liveViewport.style.display === 'none') return;
-                
                 const ratio = 402 / 874;
                 const maxWidth = window.innerWidth * 0.85;
                 const maxHeight = window.innerHeight * 0.75;
-                
-                let targetW = 402; // 设计宽度
+                let targetW = 402;
                 let targetH = targetW / ratio;
-                
-                // 缩放以适应屏幕
                 if (targetW > maxWidth) {
                     targetW = maxWidth;
                     targetH = targetW / ratio;
                 }
-                
                 if (targetH > maxHeight) {
                     targetH = maxHeight;
                     targetW = targetH * ratio;
                 }
-                
                 liveMockup.style.width = Math.round(targetW) + 'px';
                 liveMockup.style.height = Math.round(targetH) + 'px';
             }
 
             window.toggleVideo = async function(type) {
                 closeAllDemos();
-                currentVideoType = type; // 记录当前类型
+                currentVideoType = type;
                 const source = videoSources[type];
                 viewport.style.display = 'flex';
                 
-                // 先使用默认比例设置初始尺寸
+                // 立即应用默认比例，防止容器变形
                 applyVideoSize(type, source.defaultRatio);
                 
-                // 异步获取真实比例后重新调整
                 detectVideoRatio(source.mp4, source.defaultRatio).then(realRatio => {
-                    // 确保当前还是同一种视频类型
                     if (currentVideoType === type) {
                         applyVideoSize(type, realRatio);
                     }
                 });
 
                 if (googleAvailable) {
-                    container.innerHTML = `<iframe src="https://www.youtube.com/embed/${source.youtube}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen"></iframe>`;
+                    container.innerHTML = `<iframe src="https://www.youtube.com/embed/${source.youtube}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen" style="width:100%;height:100%;border:none;"></iframe>`;
                 } else {
-                    container.innerHTML = `<video playsinline controls loop autoplay src="${source.mp4}"></video>`;
+                    // 添加 playsinline 极其重要，防止移动端浏览器自动全屏
+                    container.innerHTML = `<video playsinline webkit-playsinline controls loop autoplay src="${source.mp4}" style="width:100%;height:100%;"></video>`;
                 }
                 
                 setTimeout(() => viewport.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
@@ -749,7 +742,6 @@
                 flutterLoader.style.display = 'block';
             };
 
-            // 语言切换 + 徽章检测
             window.changeLanguage = function(langCode) {
                 const dict = translations[langCode] || translations["en"];
                 document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -758,25 +750,19 @@
                 });
                 phoneMockup.style.backgroundImage = `url('${dict['screenshot']}')`;
                 const badgeUrl = dict['playBadge'];
-                // 检测google可用性
                 const detector = new Image();
                 detector.onload = () => { googleAvailable = true; playBadgeImg.src = badgeUrl; };
-                detector.onerror = () => { googleAvailable = false; playBadgeImg.src = badgeUrl; }; // 依然显示对应语言图片
+                detector.onerror = () => { googleAvailable = false; playBadgeImg.src = badgeUrl; };
                 detector.src = badgeUrl;
                 localStorage.setItem('aura_lang', langCode);
                 document.getElementById('langSwitcher').value = langCode;
             };
 
-            // 监听窗口大小变化，重新调整演示区域
             window.addEventListener('resize', () => {
                 adjustLiveDemoSize();
-                
-                // 如果视频正在显示，重新调整其尺寸
                 if (viewport.style.display === 'flex' && currentVideoType) {
                     const source = videoSources[currentVideoType];
-                    if (source) {
-                        applyVideoSize(currentVideoType, source.defaultRatio);
-                    }
+                    if (source) applyVideoSize(currentVideoType, source.defaultRatio);
                 }
             });
 
@@ -791,7 +777,6 @@
                     else lang = 'en';
                 }
                 changeLanguage(lang);
-                // 预调整
                 adjustLiveDemoSize();
             };
         })();
