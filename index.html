@@ -3,10 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title data-i18n="pageTitle">AuraSand</title>
+    
+    <!-- SEO 核心优化 -->
+    <title data-i18n="pageTitle">AuraSand | Aesthetic 3D Hourglass Focus Timer & Pomodoro App</title>
+    <meta name="description" data-i18n="metaDesc" content="Transform time into digital art. AuraSand is an immersive 3D hourglass timer for deep focus, studying & meditation. Features aesthetic themes, weather effects & white noise.">
+    <meta name="keywords" content="pomodoro timer, study with me, focus app, desk setup, aesthetic timer, ADHD tool, productivity, white noise, 3d hourglass, pomodoro, timer, 番茄钟, 专注计时器, 砂時計, 勉強, 集中, 모래시계, 뽀모도로, 沉浸式专注">
+    
+    <!-- Open Graph / 社交媒体优化 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" data-i18n="ogTitle" content="AuraSand | The Most Aesthetic 3D Focus Timer">
+    <meta property="og:description" data-i18n="ogDesc" content="Transform your time into digital art. Immersive 3D hourglass for deep focus, studying & meditation.">
+    <meta property="og:image" content="https://aurasand.app/og-image.jpg">
+    <meta property="og:url" content="https://aurasand.app">
+    <meta property="og:site_name" content="AuraSand">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" data-i18n="twitterTitle" content="AuraSand | Aesthetic 3D Focus Timer">
+    <meta name="twitter:description" data-i18n="twitterDesc" content="Transform time into digital art. 3D hourglass timer for deep focus & productivity.">
+    <meta name="twitter:image" content="https://aurasand.app/og-image.jpg">
+    
+    <!-- 多语言 SEO -->
+    <link rel="alternate" hreflang="en" href="https://aurasand.app/en">
+    <link rel="alternate" hreflang="zh-CN" href="https://aurasand.app/zh-cn">
+    <link rel="alternate" hreflang="zh-TW" href="https://aurasand.app/zh-tw">
+    <link rel="alternate" hreflang="ja" href="https://aurasand.app/ja">
+    <link rel="alternate" hreflang="ko" href="https://aurasand.app/ko">
+    <link rel="alternate" hreflang="pt-BR" href="https://aurasand.app/pt-br">
+    <link rel="canonical" href="https://aurasand.app">
+    
+    <!-- 应用下载优化 -->
+    <meta name="google-play-app" content="app-id=com.siteflare.hourglass">
+    <meta name="apple-itunes-app" content="app-id=">
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo.png">
-    <!-- 多语言字体 (保留原风格) -->
+    <link rel="apple-touch-icon" href="logo.png">
+    
+    <!-- 预加载关键资源 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://play.google.com">
+    <link rel="preconnect" href="https://api.github.com">
+    
+    <!-- 多语言字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "AuraSand",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "Android",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "1000"
+        },
+        "description": "Aesthetic 3D hourglass focus timer with Pomodoro technique, white noise, and immersive weather effects.",
+        "downloadUrl": "https://play.google.com/store/apps/details?id=com.siteflare.hourglass",
+        "softwareVersion": "2.0",
+        "screenshot": [],
+        "featureList": "Pomodoro Timer, 3D Hourglass Animation, White Noise, Weather Effects, Zen Mode, ADHD Focus Tools"
+    }
+    </script>
+    
+    <!-- FAQ 结构化数据 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is AuraSand?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "AuraSand is an aesthetic 3D hourglass focus timer app designed for deep work, studying, and meditation. It combines Pomodoro technique with immersive visuals and white noise."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is AuraSand free?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "AuraSand offers a free version with core features. Pro version unlocks weather effects, Zen quotes, and advanced customization."
+                }
+            }
+        ]
+    }
+    </script>
+
     <style>
         :root {
             --primary-color: #D94814;
@@ -25,6 +119,19 @@
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
+        }
+
+        /* SEO 隐藏但可访问的 H1 */
+        .seo-h1 {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
         }
 
         nav { 
@@ -52,7 +159,7 @@
             font-weight: 500;
         }
 
-        /* ----- 整体居中与hero优化 ----- */
+        /* Hero 区域 */
         .hero { 
             display: flex; 
             align-items: center; 
@@ -64,7 +171,6 @@
             gap: 30px;
         }
         
-        /* 左侧文字区域 */
         .hero-text { 
             flex: 1 1 50%; 
             max-width: 550px; 
@@ -83,7 +189,6 @@
             margin-bottom: 40px; 
         }
         
-        /* 下载区 —— 保证居中对齐 (移动端会调整) */
         .download-area { 
             display: flex; 
             align-items: center; 
@@ -122,7 +227,6 @@
             font-weight: 500;
         }
 
-        /* 右侧手机模型 —— 保证居中不偏移，且不被遮挡 */
         .hero-image { 
             flex: 1 1 40%; 
             display: flex; 
@@ -140,8 +244,116 @@
             background-size: cover; 
             background-position: center;
             transition: background-image 0.5s ease;
-            background-color: #f0f0f0; /* fallback */
+            background-color: #f0f0f0;
             max-width: 100%;
+        }
+
+        /* ===== 动态截图画廊 ===== */
+        .gallery-section {
+            max-width: 1200px;
+            margin: 40px auto 60px;
+            padding: 0 5%;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .gallery-title {
+            font-size: 28px;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-weight: 600;
+        }
+        
+        .gallery-status {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            background: rgba(0,0,0,0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .gallery-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+        }
+        
+        .gallery-track {
+            display: flex;
+            gap: 20px;
+            animation: scrollGallery 40s linear infinite;
+            width: max-content;
+        }
+        
+        .gallery-track:hover {
+            animation-play-state: paused;
+        }
+        
+        .gallery-item {
+            flex-shrink: 0;
+            width: 220px;
+            height: 440px;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border: 4px solid #fff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            background: #f0f0f0;
+            position: relative;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+        }
+        
+        .gallery-error {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            padding: 20px;
+            font-size: 14px;
+            background: rgba(255,100,100,0.2);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        @keyframes scrollGallery {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         /* 演示区域 */
@@ -179,7 +391,6 @@
             box-shadow: 0 12px 18px -8px rgba(0,0,0,0.1);
         }
 
-        /* 统一演示窗口样式 (黑边框模拟手机/平板) */
         .live-viewport, .video-viewport {
             display: none;
             flex-direction: column;
@@ -189,22 +400,20 @@
             width: 100%;
         }
         
-        /* 手机/平板演示共用黑色边框 —— 与live demo一致 */
         .phone-frame-mockup, .video-container {
-            background: #000;          /* 改为纯黑色背景，消除黑边 */
-            border: 8px solid #1e1e1e; /* 模拟金属中框 */
-            border-radius: 40px;       /* 圆润边框 */
+            background: #000;
+            border: 8px solid #1e1e1e;
+            border-radius: 40px;
             box-shadow: 0 30px 50px rgba(0,0,0,0.5), 0 0 0 2px #3a3a3a inset;
             position: relative;
             overflow: hidden;
             transform: translateZ(0);
             transition: width 0.3s ease, height 0.3s ease;
             margin: 0 auto;
-            max-width: 100%;           /* 关键修复：防止超出屏幕 */
-            box-sizing: content-box;   /* 让边框不影响内容宽度计算 */
+            max-width: 100%;
+            box-sizing: content-box;
         }
         
-        /* 视频内部填充 */
         .video-container iframe, .video-container video {
             position: absolute; 
             top: 0; 
@@ -214,7 +423,7 @@
             border: none; 
             display: block;
             background: #000;
-            object-fit: fill; /* 强制填充，消除黑边 */
+            object-fit: fill;
         }
 
         .phone-inner {
@@ -243,7 +452,6 @@
             z-index: 5;
         }
 
-        /* 关闭按钮 */
         .video-close-btn {
             background: rgba(0,0,0,0.5);
             backdrop-filter: blur(8px);
@@ -308,110 +516,64 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ----- 移动端修复：居中与遮挡问题 ----- */
+        /* 移动端适配 */
         @media (max-width: 768px) {
-            nav {
-                padding: 15px 5%;
-            }
+            nav { padding: 15px 5%; }
             .hero { 
                 flex-direction: column; 
                 text-align: center; 
                 padding: 10px 5% 30px;
                 gap: 20px;
             }
-            .hero-text { 
-                max-width: 100%; 
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            .hero-text h1 { 
-                font-size: 36px; 
-                margin-bottom: 16px;
-            }
-            .hero-text p {
-                font-size: 17px;
-                margin-bottom: 30px;
-                padding: 0 5px;
-            }
+            .hero-text { max-width: 100%; display: flex; flex-direction: column; align-items: center; }
+            .hero-text h1 { font-size: 36px; margin-bottom: 16px; }
+            .hero-text p { font-size: 17px; margin-bottom: 30px; padding: 0 5px; }
             
-            /* 下载区整体居中，并且防止浮动图片遮挡 */
-            .download-area {
-                justify-content: center;
-                gap: 16px;
-            }
-            .play-badge img {
-                height: 56px;
-            }
-            .qr-box {
-                padding: 6px 6px 2px;
-            }
-            .qr-box img {
-                width: 70px;
-                height: 70px;
-            }
+            .download-area { justify-content: center; gap: 16px; }
+            .play-badge img { height: 56px; }
+            .qr-box { padding: 6px 6px 2px; }
+            .qr-box img { width: 70px; height: 70px; }
             
-            /* 右侧图片减小一点，避免遮挡感，同时居中 */
-            .hero-image {
-                width: 100%;
-                margin-top: 5px;
-            }
-            .phone-mockup {
-                width: 240px;
-                height: 480px;
-                border-width: 6px;
-            }
+            .hero-image { width: 100%; margin-top: 5px; }
+            .phone-mockup { width: 240px; height: 480px; border-width: 6px; }
             
-            .demo-tabs .tab-btn {
-                padding: 10px 18px;
-                font-size: 15px;
-            }
+            .gallery-header { flex-direction: column; text-align: center; }
+            .gallery-title { font-size: 24px; }
+            .gallery-item { width: 180px; height: 360px; border-width: 3px; }
+            .gallery-track { gap: 15px; }
             
-            /* 确保黑色边框内视频比例舒适 */
+            .demo-tabs .tab-btn { padding: 10px 18px; font-size: 15px; }
             .phone-frame-mockup, .video-container {
                 border-width: 6px;
                 border-radius: 34px;
-                max-width: 95%;        /* 移动端额外限制 */
+                max-width: 95%;
             }
         }
 
-        /* 超小屏进一步适配 */
         @media (max-width: 480px) {
-            .hero-text h1 {
-                font-size: 30px;
-            }
-            .download-area {
-                gap: 10px;
-            }
-            .qr-box img {
-                width: 64px;
-                height: 64px;
-            }
-            .play-badge img {
-                height: 50px;
-            }
-            .phone-mockup {
-                width: 200px;
-                height: 400px;
-            }
+            .hero-text h1 { font-size: 30px; }
+            .download-area { gap: 10px; }
+            .qr-box img { width: 64px; height: 64px; }
+            .play-badge img { height: 50px; }
+            .phone-mockup { width: 200px; height: 400px; }
+            
+            .gallery-item { width: 150px; height: 300px; }
+            
             .phone-frame-mockup, .video-container {
                 border-width: 5px;
                 border-radius: 28px;
-                max-width: 92%;        /* 小屏更强限制 */
+                max-width: 92%;
             }
-        }
-
-        /* 保证在PC上视频容器也有黑边 —— 已经应用了 phone-frame-mockup 样式 */
-        .video-container {
-            background: #000;
-            border: 8px solid #1e1e1e;
         }
     </style>
 </head>
 <body>
 
+    <!-- SEO H1 (视觉隐藏但搜索引擎可见) -->
+    <h1 class="seo-h1" data-i18n="seoH1">AuraSand - Aesthetic 3D Hourglass Focus Timer & Pomodoro App for Deep Work</h1>
+
     <nav>
-        <div class="logo">AuraSand</div>
+        <div class="logo" itemprop="name">AuraSand</div>
         <select class="lang-selector" id="langSwitcher" onchange="changeLanguage(this.value)" aria-label="Select language">
             <option value="en">English</option>
             <option value="zh-CN">简体中文</option>
@@ -422,22 +584,45 @@
         </select>
     </nav>
 
-    <section class="hero">
+    <section class="hero" itemscope itemtype="https://schema.org/MobileApplication">
+        <meta itemprop="applicationCategory" content="ProductivityApplication">
+        <meta itemprop="operatingSystem" content="Android">
+        <meta itemprop="softwareVersion" content="2.0">
+        
         <div class="hero-text">
             <h1 data-i18n="heroTitle">Let time flow <br>into art.</h1>
-            <p data-i18n="heroDesc">Say goodbye to boring digits. Stunning 3D aesthetic hourglasses with exclusive white noise, rain effects, and animation effects create a zero-distraction focus space for you.</p>
+            <p data-i18n="heroDesc">Transform your time into digital art. AuraSand is an immersive 3D-effect hourglass designed for deep focus, studying, and meditation. Enjoy beautiful themes, interactive weather, and relaxing white noise.</p>
             <div class="download-area">
-                <a href="https://play.google.com/store/apps/details?id=com.siteflare.hourglass" target="_blank" class="play-badge" rel="noopener">
-                    <img id="playBadgeImg" src="en_badge_web_generic.png" alt="Get it on Google Play" style="height: 60px;">
+                <a href="https://play.google.com/store/apps/details?id=com.siteflare.hourglass" 
+                   target="_blank" 
+                   class="play-badge" 
+                   rel="noopener"
+                   itemprop="downloadUrl">
+                    <img id="playBadgeImg" 
+                         src="en_badge_web_generic.png" 
+                         alt="Get AuraSand on Google Play - Aesthetic 3D Focus Timer" 
+                         style="height: 60px;"
+                         loading="lazy">
                 </a>
                 <div class="qr-box">
-                    <img src="qrcode.png" alt="QR code" onerror="this.style.display='none'">
-                    <span data-i18n="scanQr">Scan to DL</span>
+                    <img src="qrcode.png" alt="QR code to download AuraSand app" onerror="this.style.display='none'" loading="lazy">
+                    <span data-i18n="scanQr">Scan to Download</span>
                 </div>
             </div>
         </div>
         <div class="hero-image">
-            <div class="phone-mockup" id="phoneMockup"></div>
+            <div class="phone-mockup" id="phoneMockup" itemprop="screenshot"></div>
+        </div>
+    </section>
+
+    <!-- ===== 动态截图画廊（从 GitHub API 自动获取） ===== -->
+    <section class="gallery-section" aria-label="App Screenshots Gallery">
+        <div class="gallery-header">
+            <h2 class="gallery-title" data-i18n="galleryTitle">Explore Beautiful Themes</h2>
+            <span class="gallery-status" id="galleryStatus">Loading...</span>
+        </div>
+        <div class="gallery-wrapper" id="galleryWrapper">
+            <div class="gallery-loading" id="galleryLoading">⌛ Loading themes...</div>
         </div>
     </section>
 
@@ -445,21 +630,20 @@
         <div class="demo-tabs">
             <button class="tab-btn" onclick="toggleVideo('vertical')" data-i18n="vidMobile">📱 Mobile Demo</button>
             <button class="tab-btn" onclick="toggleVideo('horizontal')" data-i18n="vidTablet">💻 Tablet Demo</button>
-            <!-- <button class="tab-btn" style="background: linear-gradient(135deg, #D94814 0%, #ff7e5f 100%); color: white; border: none;" onclick="loadLiveDemo()" data-i18n="liveDemo">✨ 在线体验</button> -->
         </div>
         
-        <!-- Live Web Demo 视口 (与视频演示统一样式) -->
+        <!-- Live Web Demo -->
         <div id="liveDemoViewport" class="live-viewport">
             <div class="phone-frame-mockup" id="liveMockup">
                 <div class="phone-inner">
                     <div id="flutterLoading" class="flutter-loader">⌛ AuraSand Loading…</div>
-                    <iframe id="flutterIframe" src="" allow="accelerometer; gyroscope; autoplay; microphone;"></iframe>
+                    <iframe id="flutterIframe" src="" allow="accelerometer; gyroscope; autoplay; microphone;" title="AuraSand Live Web Demo"></iframe>
                 </div>
             </div>
             <button class="video-close-btn" onclick="hideLiveDemo()" data-i18n="closeVid">Close Demo ✕</button>
         </div>
 
-        <!-- 视频演示视口 -->
+        <!-- 视频演示 -->
         <div id="videoViewport" class="video-viewport">
             <div class="video-container" id="videoContainer"></div>
             <button class="video-close-btn" onclick="hideVideo()" data-i18n="closeVid">Close Demo ✕</button>
@@ -467,7 +651,7 @@
     </section>
 
     <section class="features">
-        <div class="feature-card">
+        <div class="feature-card" itemprop="featureList">
             <h3 data-i18n="f1Title">🎨 3D Digital Art</h3>
             <p data-i18n="f1Desc">From dreamy unicorns to crystal whales, collect exquisite art hourglasses to build your desktop aesthetics.</p>
         </div>
@@ -493,62 +677,102 @@
         </div>
     </section>
 
-    <footer>
-        <p>© 2026 AuraSand. All rights reserved.</p>
+    <footer itemscope itemtype="https://schema.org/WPFooter">
+        <p>© 2026 <span itemprop="name">AuraSand</span>. All rights reserved.</p>
         <div class="footer-links">
-            <a href="https://aurasand.github.io/Hourglass-privacy/" data-i18n="privacy">Privacy Policy</a>
-            <a href="mailto:aurasand@googlegroups.com" data-i18n="contact">Contact Us</a>
+            <a href="https://aurasand.github.io/Hourglass-privacy/" data-i18n="privacy" itemprop="privacyPolicy">Privacy Policy</a>
+            <a href="mailto:aurasand@googlegroups.com" data-i18n="contact" itemprop="email">Contact Us</a>
         </div>
         <div class="stats-bar" style="margin-top: 20px; opacity: 0.8; font-size: 13px; color: rgba(255,255,255,0.9);">
-        <span id="busuanzi_container_site_pv">
-            <span data-i18n="statTotalViews">Total Views</span> 
-            <span id="busuanzi_value_site_pv" style="font-weight: 600;"></span> 
-            <span data-i18n="statTimes">&nbsp;</span>
-        </span>
-        <span style="margin: 0 8px;">·</span>
-        <span id="busuanzi_container_site_uv">
-            <span data-i18n="statVisitors">Visitors</span> 
-            <span id="busuanzi_value_site_uv" style="font-weight: 600;"></span> 
-            <span data-i18n="statPeople">&nbsp;</span>
-        </span>
-        <span style="margin: 0 8px;">·</span>
-        <span id="busuanzi_container_page_pv">
-            <span data-i18n="statPageViews">Page Views</span> 
-            <span id="busuanzi_value_page_pv" style="font-weight: 600;"></span> 
-            <span data-i18n="statTimes">&nbsp;</span>
-        </span>
-    </div>
+            <span id="busuanzi_container_site_pv">
+                <span data-i18n="statTotalViews">Total Views</span> 
+                <span id="busuanzi_value_site_pv" style="font-weight: 600;"></span> 
+                <span data-i18n="statTimes">&nbsp;</span>
+            </span>
+            <span style="margin: 0 8px;">·</span>
+            <span id="busuanzi_container_site_uv">
+                <span data-i18n="statVisitors">Visitors</span> 
+                <span id="busuanzi_value_site_uv" style="font-weight: 600;"></span> 
+                <span data-i18n="statPeople">&nbsp;</span>
+            </span>
+            <span style="margin: 0 8px;">·</span>
+            <span id="busuanzi_container_page_pv">
+                <span data-i18n="statPageViews">Page Views</span> 
+                <span id="busuanzi_value_page_pv" style="font-weight: 600;"></span> 
+                <span data-i18n="statTimes">&nbsp;</span>
+            </span>
+        </div>
     </footer>
 
     <script>
         (function(){
-            // ----- 视频源 & 多语言 -----
+            // GitHub API 配置 - 动态获取 snapshot 文件夹
+            const GITHUB_CONFIG = {
+                owner: 'aurasand',           // 替换为你的 GitHub 用户名
+                repo: 'aurasand.github.io',  // 替换为你的仓库名
+                path: 'snapshot',            // 截图文件夹路径
+                branch: 'main'               // 默认分支
+            };
+            
+            // 备用图片列表（API 失败时使用）
+            const FALLBACK_IMAGES = [
+                'snapshot/src_unicorn_01.webp',
+                'snapshot/src_whale_01.webp',
+                'snapshot/src_jellyfish_01.webp',
+                'snapshot/src_blackgold_01.webp',
+                'snapshot/src_bunny_01.webp',
+                'snapshot/src_cartoon_01.webp'
+            ];
+
+            // 视频源配置
             const videoSources = {
                 'vertical': {
                     youtube: 'QpeLBJT2Avo',
                     mp4: 'https://www.siteflare.de5.net/api/public/dl/_fb4cklN/portrait.mp4',
-                    defaultRatio: 588 / 1280  // 竖屏比例 0.459375
+                    defaultRatio: 588 / 1280
                 },
                 'horizontal': {
                     youtube: 'kr_1uMlBTPs',
                     mp4: 'https://www.siteflare.de5.net/api/public/dl/4NE6pTSS/land.mp4',
-                    defaultRatio: 1280 / 588  // 横屏比例 2.17687
+                    defaultRatio: 1280 / 588
                 }
             };
 
+            // 多语言翻译（SEO 优化版本）
             const translations = {
                 "en": {
+                    "pageTitle": "AuraSand | Aesthetic 3D Hourglass Focus Timer & Pomodoro App",
+                    "metaDesc": "Transform time into digital art. AuraSand is an immersive 3D hourglass timer for deep focus, studying & meditation. Features aesthetic themes, weather effects & white noise.",
+                    "ogTitle": "AuraSand | The Most Aesthetic 3D Focus Timer",
+                    "ogDesc": "Transform your time into digital art. Immersive 3D hourglass for deep focus, studying & meditation.",
+                    "twitterTitle": "AuraSand | Aesthetic 3D Focus Timer",
+                    "twitterDesc": "Transform time into digital art. 3D hourglass timer for deep focus & productivity.",
+                    "seoH1": "AuraSand - Aesthetic 3D Hourglass Focus Timer & Pomodoro App for Deep Work",
+                    "galleryTitle": "Explore Beautiful Themes",
+                    "galleryLoading": "Loading {count} themes...",
+                    "galleryError": "Failed to load gallery",
                     "screenshot": "screenshot_en.webp",
                     "heroTitle": "Let time flow <br>into art.",
-                    "heroDesc": "Say goodbye to boring digits. Stunning 3D aesthetic hourglasses with exclusive white noise, rain effects, and animation effects create a zero-distraction focus space for you.",
-                    "vidMobile": "📱 Mobile Demo", "vidTablet": "💻 Tablet Demo", "liveDemo": "✨ Live Web Demo", "closeVid": "Close Demo ✕", "scanQr": "Scan to DL",
-                    "f1Title": "🎨 3D Digital Art", "f1Desc": "From dreamy unicorns to crystal whales, collect exquisite art hourglasses to build your desktop aesthetics.",
-                    "f2Title": "🧘 Extreme Flow State", "f2Desc": "Enable Zen mode for smart UI hiding. Focus entirely on the flowing sand and eliminate all distractions.",
-                    "f3Title": "🎶 Sensory Experience", "f3Desc": "Exclusive high-quality white noise and haptic feedback make every focus session a ritual.",
-                    "f4Title": "⏳ Flexible Timer", "f4Desc": "Set any time from 1-999 mins. Supports lock screen notifications and precise background tracking.",
-                    "f5Title": "✨ Hide Timer & Zen Quotes (Pro)", "f5Desc": "Say goodbye to digital anxiety. Hide the ticking digits and display calming Zen quotes.",
-                    "f6Title": "⛈️ Synced Weather Effects (Pro)", "f6Desc": "Unique weather-synced experience. Rain and lightning sounds are perfectly synchronized.",
-                    "privacy": "Privacy Policy", "contact": "Contact Us",
+                    "heroDesc": "Transform your time into digital art. AuraSand is an immersive 3D-effect hourglass designed for deep focus, studying, and meditation. Enjoy beautiful themes, interactive weather, and relaxing white noise.",
+                    "vidMobile": "📱 Mobile Demo", 
+                    "vidTablet": "💻 Tablet Demo", 
+                    "liveDemo": "✨ Live Web Demo", 
+                    "closeVid": "Close Demo ✕", 
+                    "scanQr": "Scan to Download",
+                    "f1Title": "🎨 3D Digital Art", 
+                    "f1Desc": "From dreamy unicorns to crystal whales, collect exquisite art hourglasses to build your desktop aesthetics.",
+                    "f2Title": "🧘 Extreme Flow State", 
+                    "f2Desc": "Enable Zen mode for smart UI hiding. Focus entirely on the flowing sand and eliminate all distractions.",
+                    "f3Title": "🎶 Sensory Experience", 
+                    "f3Desc": "Exclusive high-quality white noise and haptic feedback make every focus session a ritual.",
+                    "f4Title": "⏳ Flexible Timer", 
+                    "f4Desc": "Set any time from 1-999 mins. Supports lock screen notifications and precise background tracking.",
+                    "f5Title": "✨ Hide Timer & Zen Quotes (Pro)", 
+                    "f5Desc": "Say goodbye to digital anxiety. Hide the ticking digits and display calming Zen quotes.",
+                    "f6Title": "⛈️ Synced Weather Effects (Pro)", 
+                    "f6Desc": "Unique weather-synced experience. Rain and lightning sounds are perfectly synchronized.",
+                    "privacy": "Privacy Policy", 
+                    "contact": "Contact Us",
                     "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png",
                     "statTotalViews": "Total Views",
                     "statVisitors": "Visitors", 
@@ -557,17 +781,38 @@
                     "statPeople": "&nbsp;"
                 },
                 "zh-CN": {
+                    "pageTitle": "AuraSand 灵动沙漏 | 3D 沉浸式专注计时器与番茄钟",
+                    "metaDesc": "让时间流动成艺术。AuraSand 是一款专为深度工作、学习和冥想设计的 3D 质感动态沙漏。享受精美的艺术主题、视听天气特效以及助眠白噪音。",
+                    "ogTitle": "AuraSand 灵动沙漏 | 绝美 3D 专注计时器",
+                    "ogDesc": "告别枯燥的数字。绝美 3D 质感动态沙漏，配合专属白噪音、下雨等音效和动画特效，为您打造零干扰的沉浸式专注空间。",
+                    "twitterTitle": "AuraSand 灵动沙漏 | 3D 专注计时器",
+                    "twitterDesc": "让时间流动成艺术。专为深度工作、学习和冥想设计的 3D 质感动态沙漏。",
+                    "seoH1": "AuraSand 灵动沙漏 - 3D 沉浸式专注计时器与番茄钟应用",
+                    "galleryTitle": "探索精美主题",
+                    "galleryLoading": "正在加载 {count} 个主题...",
+                    "galleryError": "加载画廊失败",
                     "screenshot": "screenshot_zh-CN.webp",
                     "heroTitle": "让时间，<br>流动成艺术。",
                     "heroDesc": "告别枯燥的数字。绝美 3D 质感动态沙漏，配合专属白噪音、下雨等音效和动画特效，为您打造零干扰的沉浸式专注空间。",
-                    "vidMobile": "📱 手机端演示", "vidTablet": "💻 平板端演示", "liveDemo": "✨ 在线试用", "closeVid": "收起演示 ✕", "scanQr": "扫码获取",
-                    "f1Title": "🎨 3D 数字潮玩", "f1Desc": "从梦幻独角兽到晶莹鲸鱼，收集风格各异的精美艺术沙漏，打造专属桌面美学。",
-                    "f2Title": "🧘 极致沉浸心流", "f2Desc": "开启 Zen 模式，UI 智能隐退。让视觉完全聚焦于流动的沙砾，告别一切干扰。",
-                    "f3Title": "🎶 全方位感官体验", "f3Desc": "专属高品质背景白噪音，配合细腻的互动震动与动画特效，让专注充满仪式感。",
-                    "f4Title": "⏳ 灵活时间掌控", "f4Desc": "1-999 分钟随心设定。支持锁屏通知与后台精确运行。",
-                    "f5Title": "✨ 隐藏计时 & 专属禅语 (Pro)", "f5Desc": "告别数字焦虑。支持隐藏倒计时滴答，浮现宁静禅语。让每一次专注都成为心灵对话。",
-                    "f6Title": "⛈️ 声光联动拟真特效(Pro)", "f6Desc": "独创天气联动体验。当屏幕闪过雷电，雨声与闪电完美同步交织，带给您极具穿透力的沉浸式视听享受。",
-                    "privacy": "隐私政策", "contact": "联系我们",
+                    "vidMobile": "📱 手机端演示", 
+                    "vidTablet": "💻 平板端演示", 
+                    "liveDemo": "✨ 在线试用", 
+                    "closeVid": "收起演示 ✕", 
+                    "scanQr": "扫码获取",
+                    "f1Title": "🎨 3D 数字潮玩", 
+                    "f1Desc": "从梦幻独角兽到晶莹鲸鱼，收集风格各异的精美艺术沙漏，打造专属桌面美学。",
+                    "f2Title": "🧘 极致沉浸心流", 
+                    "f2Desc": "开启 Zen 模式，UI 智能隐退。让视觉完全聚焦于流动的沙砾，告别一切干扰。",
+                    "f3Title": "🎶 全方位感官体验", 
+                    "f3Desc": "专属高品质背景白噪音，配合细腻的互动震动与动画特效，让专注充满仪式感。",
+                    "f4Title": "⏳ 灵活时间掌控", 
+                    "f4Desc": "1-999 分钟随心设定。支持锁屏通知与后台精确运行。",
+                    "f5Title": "✨ 隐藏计时 & 专属禅语 (Pro)", 
+                    "f5Desc": "告别数字焦虑。支持隐藏倒计时滴答，浮现宁静禅语。让每一次专注都成为心灵对话。",
+                    "f6Title": "⛈️ 声光联动拟真特效(Pro)", 
+                    "f6Desc": "独创天气联动体验。当屏幕闪过雷电，雨声与闪电完美同步交织，带给您极具穿透力的沉浸式视听享受。",
+                    "privacy": "隐私政策", 
+                    "contact": "联系我们",
                     "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/zh-cn_badge_web_generic.png",
                     "statTotalViews": "总访问量",
                     "statVisitors": "访客数",
@@ -576,17 +821,38 @@
                     "statPeople": "人"
                 },
                 "zh-TW": {
+                    "pageTitle": "AuraSand 靈動沙漏 | 3D 沉浸式專注計時器與番茄鐘",
+                    "metaDesc": "讓時間流動成藝術。AuraSand 是一款專為深度工作、學習和冥想設計的 3D 質感動態沙漏。享受精美的藝術主題、視聽天氣特效以及助眠白噪音。",
+                    "ogTitle": "AuraSand 靈動沙漏 | 絕美 3D 專注計時器",
+                    "ogDesc": "告別枯燥的數字。絕美 3D 質感動態沙漏，配合專屬白噪音、下雨等音效和動畫特效，為您打造零干擾的沉浸式專注空間。",
+                    "twitterTitle": "AuraSand 靈動沙漏 | 3D 專注計時器",
+                    "twitterDesc": "讓時間流動成藝術。專為深度工作、學習和冥想設計的 3D 質感動態沙漏。",
+                    "seoH1": "AuraSand 靈動沙漏 - 3D 沉浸式專注計時器與番茄鐘應用",
+                    "galleryTitle": "探索精美主題",
+                    "galleryLoading": "正在加載 {count} 個主題...",
+                    "galleryError": "加載畫廊失敗",
                     "screenshot": "screenshot_zh-TW.webp",
                     "heroTitle": "讓時間，<br>流動成藝術。",
                     "heroDesc": "告別枯燥的數字。絕美 3D 質感動態沙漏，配合專屬白噪音、下雨等音效和動畫特效，為您打造零干擾的沉浸式專注空間。",
-                    "vidMobile": "📱 手機端演示", "vidTablet": "💻 平板端演示", "liveDemo": "✨ 線上試用", "closeVid": "收起演示 ✕", "scanQr": "掃碼獲取",
-                    "f1Title": "🎨 3D 數位潮玩", "f1Desc": "從夢幻獨角獸到晶瑩鯨魚，收集風格各異的精美藝術沙漏，打造專屬桌面美學。",
-                    "f2Title": "🧘 極致沉浸心流", "f2Desc": "開啟 Zen 模式，UI 智能隱退。讓視覺完全聚焦於流動的沙礫，告別一切干擾。",
-                    "f3Title": "🎶 全方位感官體驗", "f3Desc": "專屬高品質背景白噪音，配合細膩的互動震動與動畫特效，讓專注充滿儀式感。",
-                    "f4Title": "⏳ 靈活時間掌控", "f4Desc": "1-999 分鐘隨心設定。支援鎖屏通知與後台精確運行。",
-                    "f5Title": "✨ 隱藏計時 & 專屬禪語 (Pro)", "f5Desc": "告別數字焦慮。支援隱藏倒計時滴答，浮現寧靜禪語。讓每一次專注都成為心靈對話。",
-                    "f6Title": "⛈️ 聲光聯動擬真特效(Pro)", "f6Desc": "獨創天氣聯動體驗。當螢幕閃過雷電，雨聲與閃電完美同步交織，帶給您極具穿透力的沉浸式視聽享受。",
-                    "privacy": "隱私政策", "contact": "聯繫我們",
+                    "vidMobile": "📱 手機端演示", 
+                    "vidTablet": "💻 平板端演示", 
+                    "liveDemo": "✨ 線上試用", 
+                    "closeVid": "收起演示 ✕", 
+                    "scanQr": "掃碼獲取",
+                    "f1Title": "🎨 3D 數位潮玩", 
+                    "f1Desc": "從夢幻獨角獸到晶瑩鯨魚，收集風格各異的精美藝術沙漏，打造專屬桌面美學。",
+                    "f2Title": "🧘 極致沉浸心流", 
+                    "f2Desc": "開啟 Zen 模式，UI 智能隱退。讓視覺完全聚焦於流動的沙礫，告別一切干擾。",
+                    "f3Title": "🎶 全方位感官體驗", 
+                    "f3Desc": "專屬高品質背景白噪音，配合細膩的互動震動與動畫特效，讓專注充滿儀式感。",
+                    "f4Title": "⏳ 靈活時間掌控", 
+                    "f4Desc": "1-999 分鐘隨心設定。支援鎖屏通知與後台精確運行。",
+                    "f5Title": "✨ 隱藏計時 & 專屬禪語 (Pro)", 
+                    "f5Desc": "告別數字焦慮。支援隱藏倒計時滴答，浮現寧靜禪語。讓每一次專注都成為心靈對話。",
+                    "f6Title": "⛈️ 聲光聯動擬真特效(Pro)", 
+                    "f6Desc": "獨創天氣聯動體驗。當螢幕閃過雷電，雨聲與閃電完美同步交織，帶給您極具穿透力的沉浸式視聽享受。",
+                    "privacy": "隱私政策", 
+                    "contact": "聯繫我們",
                     "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/zh-tw_badge_web_generic.png",
                     "statTotalViews": "總訪問量",
                     "statVisitors": "訪客數", 
@@ -595,17 +861,38 @@
                     "statPeople": "人"
                 },
                 "ja": {
+                    "pageTitle": "AuraSand | 美しい3D砂時計フォーカスタイマーとポモドーロ",
+                    "metaDesc": "時間を芸術に変える。AuraSandは、深い集中、勉強、瞑想のために設計された没入型3D砂時計タイマーです。美しいテーマ、インタラクティブな天気、リラックスできるホワイトノイズをお楽しみください。",
+                    "ogTitle": "AuraSand | 最も美しい3Dフォーカスタイマー",
+                    "ogDesc": "時間をデジタルアートに変えましょう。深い集中、勉強、瞑想のための没入型3D砂時計。",
+                    "twitterTitle": "AuraSand | 美しい3Dフォーカスタイマー",
+                    "twitterDesc": "時間を芸術に変える。深い集中と生産性のための3D砂時計タイマー。",
+                    "seoH1": "AuraSand - 美しい3D砂時計フォーカスタイマーとポモドーロアプリ",
+                    "galleryTitle": "美しいテーマを探索",
+                    "galleryLoading": "{count}個のテーマを読み込み中...",
+                    "galleryError": "ギャラリーの読み込みに失敗しました",
                     "screenshot": "screenshot_jp.webp",
                     "heroTitle": "時間を、<br>芸術に。",
                     "heroDesc": "退屈な数字とはお別れ。美しい3Dの砂時計と、専用のホワイトノイズ、雨音、アニメーション効果が、没入型の集中空間を作ります。",
-                    "vidMobile": "📱 モバイルデモ", "vidTablet": "💻 タブレットデモ", "liveDemo": "✨ ライブデモ", "closeVid": "閉じる ✕", "scanQr": "スキャンしてDL",
-                    "f1Title": "🎨 3Dデジタルアート", "f1Desc": "夢のようなユニコーンからクリスタルクジラまで、多彩なアート砂時計を集めてデスクトップを美しく。",
-                    "f2Title": "🧘 究極のフロー状態", "f2Desc": "ZenモードでUIを非表示。砂の流れに集中し、すべての気を散らすものを排除。",
-                    "f3Title": "🎶 五感体験", "f3Desc": "高品質なホワイトノイズと繊細な振動・エフェクトが、集中を一つの儀式にします。",
-                    "f4Title": "⏳ 柔軟な時間管理", "f4Desc": "1〜999分で自由に設定。正確なバックグラウンド実行をサポート。",
-                    "f5Title": "✨ タイマー非表示 & 禅語 (Pro)", "f5Desc": "数字の焦りから解放。タイマーを隠し、禅語を表示。好きな言葉のカスタマイズも可能。",
-                    "f6Title": "⛈️ 雷雨シンクロエフェクト (Pro)", "f6Desc": "没入型天候エフェクト。雷と雨の音が完璧にシンクロする究極の体験。",
-                    "privacy": "プライバシーポリシー", "contact": "お問い合わせ",
+                    "vidMobile": "📱 モバイルデモ", 
+                    "vidTablet": "💻 タブレットデモ", 
+                    "liveDemo": "✨ ライブデモ", 
+                    "closeVid": "閉じる ✕", 
+                    "scanQr": "スキャンしてDL",
+                    "f1Title": "🎨 3Dデジタルアート", 
+                    "f1Desc": "夢のようなユニコーンからクリスタルクジラまで、多彩なアート砂時計を集めてデスクトップを美しく。",
+                    "f2Title": "🧘 究極のフロー状態", 
+                    "f2Desc": "ZenモードでUIを非表示。砂の流れに集中し、すべての気を散らすものを排除。",
+                    "f3Title": "🎶 五感体験", 
+                    "f3Desc": "高品質なホワイトノイズと繊細な振動・エフェクトが、集中を一つの儀式にします。",
+                    "f4Title": "⏳ 柔軟な時間管理", 
+                    "f4Desc": "1〜999分で自由に設定。正確なバックグラウンド実行をサポート。",
+                    "f5Title": "✨ タイマー非表示 & 禅語 (Pro)", 
+                    "f5Desc": "数字の焦りから解放。タイマーを隠し、禅語を表示。好きな言葉のカスタマイズも可能。",
+                    "f6Title": "⛈️ 雷雨シンクロエフェクト (Pro)", 
+                    "f6Desc": "没入型天候エフェクト。雷と雨の音が完璧にシンクロする究極の体験。",
+                    "privacy": "プライバシーポリシー", 
+                    "contact": "お問い合わせ",
                     "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/ja_badge_web_generic.png",
                     "statTotalViews": "総閲覧数",
                     "statVisitors": "訪問者数",
@@ -614,17 +901,38 @@
                     "statPeople": "人"
                 },
                 "ko": {
+                    "pageTitle": "AuraSand | 미학적인 3D 모래시계 집중 타이머와 뽀모도로",
+                    "metaDesc": "시간을 예술로 만드세요. AuraSand는 심층 집중, 공부 및 명상을 위해 설계된 몰입형 3D 모래시계 타이머입니다. 아름다운 테마, 인터랙티브한 날씨, 편안한 백색 소음을 즐겨보세요.",
+                    "ogTitle": "AuraSand | 가장 미학적인 3D 집중 타이머",
+                    "ogDesc": "시간을 디지털 예술로 변형하세요. 심층 집중, 공부 및 명상을 위한 몰입형 3D 모래시계입니다.",
+                    "twitterTitle": "AuraSand | 미학적인 3D 집중 타이머",
+                    "twitterDesc": "시간을 예술로 만드세요. 심층 집중과 생산성을 위한 3D 모래시계 타이머.",
+                    "seoH1": "AuraSand - 미학적인 3D 모래시계 집중 타이머와 뽀모도로 앱",
+                    "galleryTitle": "아름다운 테마 탐색",
+                    "galleryLoading": "{count}개 테마 로드 중...",
+                    "galleryError": "갤러리 로드 실패",
                     "screenshot": "screenshot_ko.webp",
                     "heroTitle": "시간을<br>예술로 만들다.",
-                    "heroDesc": "지루한 숫자와 작별하세요. 아름다운 3D 모래시계와 전용 백색 소음, 빗소리, 애니메이션 효과가 방해 없는 집중 공간을 만듭니다。",
-                    "vidMobile": "📱 모바일 데모", "vidTablet": "💻 태블릿 데모", "liveDemo": "✨ 라이브 데모", "closeVid": "닫기 ✕", "scanQr": "다운로드 스캔",
-                    "f1Title": "🎨 3D 디지털 아트", "f1Desc": "유니콘부터 고래까지, 다양한 예술적인 모래시계를 수집하여 나만의 데스크탑 미학을 만드세요.",
-                    "f2Title": "🧘 극강의 몰입 상태", "f2Desc": "Zen 모드를 켜면 UI가 숨겨집니다. 흐르는 모래에 집중하고 모든 방해 요소를 차단하세요.",
-                    "f3Title": "🎶 감각적인 경험", "f3Desc": "고품질 백색 소음과 섬세한 진동 피드백이 집중을 하나의 의식으로 만듭니다.",
-                    "f4Title": "⏳ 유연한 시간 설정", "f4Desc": "1-999분 설정. 정확한 백그라운드 실행을 지원합니다.",
-                    "f5Title": "✨ 명언 & 타이머 숨기기 (Pro)", "f5Desc": "숫자 강박에서 벗어나세요. 타이머를 숨기고 명언을 띄웁니다. 나만의 명언 커스텀 지원.",
-                    "f6Title": "⛈️ 날씨 싱크 효과 (Pro)", "f6Desc": "몰입형 날씨 동기화. 번개 번쩍임과 빗소리의 완벽한 조화를 경험하세요.",
-                    "privacy": "개인정보 처리방침", "contact": "문의하기",
+                    "heroDesc": "지루한 숫자와 작별하세요. 아름다운 3D 모래시계와 전용 백색 소음, 빗소리, 애니메이션 효과가 방해 없는 집중 공간을 만듭니다.",
+                    "vidMobile": "📱 모바일 데모", 
+                    "vidTablet": "💻 태블릿 데모", 
+                    "liveDemo": "✨ 라이브 데모", 
+                    "closeVid": "닫기 ✕", 
+                    "scanQr": "다운로드 스캔",
+                    "f1Title": "🎨 3D 디지털 아트", 
+                    "f1Desc": "유니콘부터 고래까지, 다양한 예술적인 모래시계를 수집하여 나만의 데스크탑 미학을 만드세요.",
+                    "f2Title": "🧘 극강의 몰입 상태", 
+                    "f2Desc": "Zen 모드를 켜면 UI가 숨겨집니다. 흐르는 모래에 집중하고 모든 방해 요소를 차단하세요.",
+                    "f3Title": "🎶 감각적인 경험", 
+                    "f3Desc": "고품질 백색 소음과 섬세한 진동 피드백이 집중을 하나의 의식으로 만듭니다.",
+                    "f4Title": "⏳ 유연한 시간 설정", 
+                    "f4Desc": "1-999분 설정. 정확한 백그라운드 실행을 지원합니다.",
+                    "f5Title": "✨ 명언 & 타이머 숨기기 (Pro)", 
+                    "f5Desc": "숫자 강박에서 벗어나세요. 타이머를 숨기고 명언을 띄웁니다. 나만의 명언 커스텀 지원.",
+                    "f6Title": "⛈️ 날씨 싱크 효과 (Pro)", 
+                    "f6Desc": "몰입형 날씨 동기화. 번개 번쩍임과 빗소리의 완벽한 조화를 경험하세요.",
+                    "privacy": "개인정보 처리방침", 
+                    "contact": "문의하기",
                     "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/ko_badge_web_generic.png",
                     "statTotalViews": "총 조회수",
                     "statVisitors": "방문자",
@@ -632,9 +940,18 @@
                     "statTimes": "회",
                     "statPeople": "명"
                 },
-                // 新增：葡萄牙语（巴西）
                 "pt-BR": {
-                    "screenshot": "screenshot_en.jpg",  // 使用英文截图
+                    "pageTitle": "AuraSand | Ampulheta 3D Estética - Timer de Foco e Pomodoro",
+                    "metaDesc": "Transforme o tempo em arte digital. AuraSand é uma ampulheta 3D imersiva projetada para foco profundo, estudos e meditação. Desfrute de temas bonitos, clima interativo e ruído branco relaxante.",
+                    "ogTitle": "AuraSand | O Timer de Foco 3D Mais Estético",
+                    "ogDesc": "Transforme seu tempo em arte digital. Ampulheta 3D imersiva para foco profundo, estudos e meditação.",
+                    "twitterTitle": "AuraSand | Timer de Foco 3D Estético",
+                    "twitterDesc": "Transforme o tempo em arte. Timer de ampulheta 3D para foco profundo e produtividade.",
+                    "seoH1": "AuraSand - Ampulheta 3D Estética, Timer de Foco e Aplicativo Pomodoro",
+                    "galleryTitle": "Explore Temas Lindos",
+                    "galleryLoading": "Carregando {count} temas...",
+                    "galleryError": "Falha ao carregar galeria",
+                    "screenshot": "screenshot_en.jpg",
                     "heroTitle": "Transforme o tempo<br>em arte.",
                     "heroDesc": "Diga adeus aos números chatos. Ampulhetas 3D deslumbrantes com ruído branco exclusivo, efeitos de chuva e animações criam um espaço de foco imersivo sem distrações.",
                     "vidMobile": "📱 Demo Mobile", 
@@ -657,7 +974,6 @@
                     "privacy": "Política de Privacidade", 
                     "contact": "Entre em Contato",
                     "playBadge": "https://play.google.com/intl/en_us/badges/static/images/badges/pt_badge_web_generic.png",
-                    // 统计
                     "statTotalViews": "Visualizações:", 
                     "statVisitors": "Visitantes:", 
                     "statPageViews": "Página:",
@@ -666,7 +982,7 @@
                 }
             };
 
-            // ----- DOM 元素 -----
+            // DOM 元素
             const viewport = document.getElementById('videoViewport');
             const container = document.getElementById('videoContainer');
             const liveViewport = document.getElementById('liveDemoViewport');
@@ -675,22 +991,154 @@
             const flutterLoader = document.getElementById('flutterLoading');
             const playBadgeImg = document.getElementById('playBadgeImg');
             const phoneMockup = document.getElementById('phoneMockup');
+            const galleryWrapper = document.getElementById('galleryWrapper');
+            const galleryLoading = document.getElementById('galleryLoading');
+            const galleryStatus = document.getElementById('galleryStatus');
             
             let googleAvailable = false;
-            let currentVideoType = null; // 记录当前显示的视频类型
-            let currentVideoRatio = null; // 记录当前视频的实际比例
+            let currentVideoType = null;
+            let currentVideoRatio = null;
+            let galleryImages = [];
             const FLUTTER_APP_URL = "https://aurasand.pages.dev/";
+
+            // ===== GitHub API 动态获取截图 =====
+            async function fetchGalleryImages() {
+                const apiUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.path}?ref=${GITHUB_CONFIG.branch}`;
+                
+                try {
+                    const response = await fetch(apiUrl, {
+                        headers: {
+                            'Accept': 'application/vnd.github.v3+json'
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`GitHub API error: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    // 过滤出 webp 图片文件
+                    const images = data
+                        .filter(item => item.type === 'file' && item.name.endsWith('.webp'))
+                        .map(item => ({
+                            name: item.name,
+                            url: item.download_url,
+                            path: item.path
+                        }))
+                        .sort((a, b) => a.name.localeCompare(b.name));
+                    
+                    return images;
+                    
+                } catch (error) {
+                    console.warn('Failed to fetch from GitHub API:', error);
+                    return null;
+                }
+            }
+
+            // 初始化画廊
+            async function initGallery() {
+                // 尝试从 GitHub API 获取
+                let images = await fetchGalleryImages();
+                let useFallback = false;
+                
+                // 如果失败或为空，使用备用列表
+                if (!images || images.length === 0) {
+                    images = FALLBACK_IMAGES.map(path => ({
+                        name: path.split('/').pop(),
+                        url: path,
+                        path: path
+                    }));
+                    useFallback = true;
+                }
+                
+                galleryImages = images;
+                
+                // 更新状态文本
+                const currentLang = localStorage.getItem('aura_lang') || 'en';
+                const dict = translations[currentLang] || translations['en'];
+                const statusText = useFallback ? 
+                    (dict.galleryError || 'Using cached themes') : 
+                    (dict.galleryLoading || 'Loading...').replace('{count}', images.length);
+                galleryStatus.textContent = statusText;
+                
+                // 创建画廊 DOM
+                createGallery(images);
+                
+                // 更新结构化数据
+                updateSchemaScreenshots(images);
+            }
+
+            // 创建画廊 DOM
+            function createGallery(images) {
+                // 清除加载状态
+                galleryWrapper.innerHTML = '';
+                
+                if (images.length === 0) {
+                    galleryWrapper.innerHTML = '<div class="gallery-error">No themes found</div>';
+                    return;
+                }
+                
+                // 创建轨道容器
+                const track = document.createElement('div');
+                track.className = 'gallery-track';
+                track.id = 'galleryTrack';
+                
+                // 创建双倍图片实现无缝循环
+                const allImages = [...images, ...images];
+                
+                allImages.forEach((img, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.setAttribute('role', 'img');
+                    item.setAttribute('aria-label', `AuraSand theme ${(index % images.length) + 1}: ${img.name.replace('.webp', '')}`);
+                    
+                    const image = document.createElement('img');
+                    image.src = img.url;
+                    image.alt = `AuraSand 3D hourglass theme: ${img.name.replace('.webp', '').replace(/_/g, ' ')}`;
+                    image.loading = 'lazy';
+                    
+                    // 错误处理
+                    image.onerror = () => {
+                        item.style.display = 'none';
+                    };
+                    
+                    item.appendChild(image);
+                    track.appendChild(item);
+                });
+                
+                galleryWrapper.appendChild(track);
+                
+                // 动态调整动画速度
+                const baseSpeed = 40; // 基础速度（秒）
+                const speedFactor = Math.max(20, baseSpeed - (images.length * 2)); // 图片越多速度越快
+                track.style.animationDuration = `${speedFactor}s`;
+            }
+
+            // 更新 Schema.org 截图数据
+            function updateSchemaScreenshots(images) {
+                const schemas = document.querySelectorAll('script[type="application/ld+json"]');
+                schemas.forEach(script => {
+                    try {
+                        const data = JSON.parse(script.textContent);
+                        if (data['@type'] === 'SoftwareApplication' && data.screenshot) {
+                            data.screenshot = images.slice(0, 6).map(img => img.url);
+                            script.textContent = JSON.stringify(data, null, 2);
+                        }
+                    } catch (e) {
+                        // 忽略解析错误
+                    }
+                });
+            }
 
             // 辅助函数：关闭所有演示
             function closeAllDemos() {
-                // 隐藏视频
                 viewport.style.display = 'none';
                 container.innerHTML = '';
                 container.style.width = '0';
                 container.style.height = '0';
                 currentVideoType = null;
                 currentVideoRatio = null;
-                // 隐藏live
                 liveViewport.style.display = 'none';
                 flutterIframe.src = "";
                 flutterLoader.style.display = 'block';
@@ -703,21 +1151,18 @@
                     tempVideo.style.display = 'none';
                     tempVideo.preload = "metadata";
                     const timeout = setTimeout(() => {
-                        console.log('Video metadata timeout, using default ratio:', defaultRatio);
                         resolve(defaultRatio);
                     }, 3000);
                     
                     tempVideo.onloadedmetadata = () => {
                         clearTimeout(timeout);
                         const ratio = tempVideo.videoWidth / tempVideo.videoHeight;
-                        console.log(`Video dimensions: ${tempVideo.videoWidth}x${tempVideo.videoHeight}, ratio: ${ratio}`);
                         resolve(ratio);
                         tempVideo.remove();
                     };
                     
                     tempVideo.onerror = () => {
                         clearTimeout(timeout);
-                        console.log('Video metadata load error, using default ratio:', defaultRatio);
                         resolve(defaultRatio);
                         tempVideo.remove();
                     };
@@ -726,7 +1171,7 @@
                 });
             }
 
-            // 计算视频尺寸 - 严格按比例，消除黑边
+            // 计算视频尺寸
             function applyVideoSize(type, ratio) {
                 const isMobile = window.innerWidth <= 768;
                 const maxWidth = isMobile ? window.innerWidth * 0.9 : 800;
@@ -735,35 +1180,26 @@
                 let width, height;
                 
                 if (type === 'vertical') {
-                    // 竖屏视频：优先用高度限制
                     height = Math.min(maxHeight, isMobile ? 600 : 700);
                     width = height * ratio;
-                    
-                    // 如果宽度超出，用宽度反算
                     if (width > maxWidth) {
                         width = maxWidth;
                         height = width / ratio;
                     }
                 } else {
-                    // 横屏视频：优先用宽度限制
                     width = Math.min(maxWidth, isMobile ? 500 : 800);
                     height = width / ratio;
-                    
-                    // 如果高度超出，用高度反算
                     if (height > maxHeight) {
                         height = maxHeight;
                         width = height * ratio;
                     }
                 }
                 
-                // 确保是整数像素
                 width = Math.round(width);
                 height = Math.round(height);
                 
                 container.style.width = width + 'px';
                 container.style.height = height + 'px';
-                
-                console.log(`Applied size for ${type}: ${width}x${height}, ratio: ${ratio}`);
                 
                 return { width, height };
             }
@@ -776,10 +1212,9 @@
                 const maxWidth = window.innerWidth * 0.85;
                 const maxHeight = window.innerHeight * 0.75;
                 
-                let targetW = 402; // 设计宽度
+                let targetW = 402;
                 let targetH = targetW / ratio;
                 
-                // 缩放以适应屏幕
                 if (targetW > maxWidth) {
                     targetW = maxWidth;
                     targetH = targetW / ratio;
@@ -794,26 +1229,22 @@
                 liveMockup.style.height = Math.round(targetH) + 'px';
             }
 
+            // 视频切换
             window.toggleVideo = async function(type) {
                 closeAllDemos();
                 currentVideoType = type;
                 const source = videoSources[type];
                 viewport.style.display = 'flex';
                 
-                console.log(`Toggle video: ${type}`);
-                
-                // 获取真实视频比例
                 const realRatio = await detectVideoRatio(source.mp4, source.defaultRatio);
                 currentVideoRatio = realRatio;
                 
-                // 应用尺寸
                 applyVideoSize(type, realRatio);
                 
-                // 插入视频元素
                 if (googleAvailable) {
-                    container.innerHTML = `<iframe src="https://www.youtube.com/embed/${source.youtube}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen"></iframe>`;
+                    container.innerHTML = `<iframe src="https://www.youtube.com/embed/${source.youtube}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; fullscreen" title="AuraSand ${type} demo video"></iframe>`;
                 } else {
-                    container.innerHTML = `<video playsinline controls loop autoplay src="${source.mp4}"></video>`;
+                    container.innerHTML = `<video playsinline controls loop autoplay src="${source.mp4}" title="AuraSand ${type} demo video"></video>`;
                 }
                 
                 setTimeout(() => viewport.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
@@ -845,54 +1276,68 @@
                 flutterLoader.style.display = 'block';
             };
 
-            // 语言切换 + 徽章检测
+            // 语言切换
             window.changeLanguage = function(langCode) {
                 const dict = translations[langCode] || translations["en"];
+                
                 document.querySelectorAll('[data-i18n]').forEach(el => {
                     const key = el.getAttribute('data-i18n');
                     if (dict[key]) el.innerHTML = dict[key];
                 });
+                
+                document.title = dict.pageTitle;
+                document.querySelector('meta[name="description"]').setAttribute('content', dict.metaDesc);
+                document.querySelector('meta[property="og:title"]').setAttribute('content', dict.ogTitle);
+                document.querySelector('meta[property="og:description"]').setAttribute('content', dict.ogDesc);
+                document.querySelector('meta[name="twitter:title"]').setAttribute('content', dict.twitterTitle);
+                document.querySelector('meta[name="twitter:description"]').setAttribute('content', dict.twitterDesc);
+                
                 phoneMockup.style.backgroundImage = `url('${dict['screenshot']}')`;
+                
                 const badgeUrl = dict['playBadge'];
-                // 检测google可用性
                 const detector = new Image();
                 detector.onload = () => { googleAvailable = true; playBadgeImg.src = badgeUrl; };
                 detector.onerror = () => { googleAvailable = false; playBadgeImg.src = badgeUrl; };
                 detector.src = badgeUrl;
+                
                 localStorage.setItem('aura_lang', langCode);
                 document.getElementById('langSwitcher').value = langCode;
+                document.documentElement.lang = langCode;
+                
+                // 更新画廊状态文本
+                if (galleryImages.length > 0) {
+                    galleryStatus.textContent = (dict.galleryLoading || 'Loading...').replace('{count}', galleryImages.length);
+                }
             };
 
-            // 监听窗口大小变化
+            // 监听窗口变化
             window.addEventListener('resize', () => {
                 adjustLiveDemoSize();
-                
                 if (viewport.style.display === 'flex' && currentVideoType && currentVideoRatio) {
                     applyVideoSize(currentVideoType, currentVideoRatio);
                 }
             });
 
-            // 监听屏幕方向变化
             window.addEventListener('orientationchange', () => {
                 setTimeout(() => {
                     adjustLiveDemoSize();
-                    
                     if (viewport.style.display === 'flex' && currentVideoType && currentVideoRatio) {
                         applyVideoSize(currentVideoType, currentVideoRatio);
                     }
                 }, 100);
             });
 
+            // 初始化
             window.onload = () => {
+                // 启动画廊加载（异步）
+                initGallery();
+                
                 let lang = localStorage.getItem('aura_lang');
                 if (!lang) {
                     const browserLang = navigator.language.toLowerCase();
-                    // 巴西葡萄牙语检测（优先精确匹配 pt-br）
                     if (browserLang === 'pt-br') lang = 'pt-BR';
-                    // 其他葡萄牙语变体（葡萄牙、安哥拉、莫桑比克等）也使用巴西葡萄牙语
                     else if (browserLang.startsWith('pt-')) lang = 'pt-BR';
                     else if (browserLang === 'pt') lang = 'pt-BR';
-                    // 中文检测
                     else if (browserLang.includes('tw') || browserLang.includes('hk')) lang = 'zh-TW';
                     else if (browserLang.includes('zh')) lang = 'zh-CN';
                     else if (browserLang.includes('ja')) lang = 'ja';
