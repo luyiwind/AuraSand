@@ -1420,8 +1420,23 @@
                 
                 document.querySelectorAll('[data-i18n]').forEach(el => {
                     const key = el.getAttribute('data-i18n');
-                    if (dict[key]) el.innerHTML = dict[key];
+                    if (dict[key] !== undefined) {
+                        // 处理空值情况
+                        const value = dict[key];
+                        if (value === '&nbsp;' || value === '') {
+                            el.innerHTML = '';
+                        } else {
+                            el.innerHTML = value;
+                        }
+                    }
                 });
+                
+                document.title = dict.pageTitle;
+                document.querySelector('meta[name="description"]').setAttribute('content', dict.metaDesc);
+                document.querySelector('meta[property="og:title"]').setAttribute('content', dict.ogTitle);
+                document.querySelector('meta[property="og:description"]').setAttribute('content', dict.ogDesc);
+                document.querySelector('meta[name="twitter:title"]').setAttribute('content', dict.twitterTitle);
+                document.querySelector('meta[name="twitter:description"]').setAttribute('content', dict.twitterDesc);
                 
                 phoneMockup.style.backgroundImage = `url('${dict['screenshot']}')`;
                 
@@ -1433,28 +1448,17 @@
                 
                 localStorage.setItem('aura_lang', langCode);
                 document.getElementById('langSwitcher').value = langCode;
+                document.documentElement.lang = langCode;
                 
-                // ===== 强制更新统计单位 =====
-                // 延迟执行，确保不蒜子脚本已经运行完毕
-                setTimeout(() => {
-                    // 找到所有统计单位元素并强制更新
-                    const statTimesElements = document.querySelectorAll('[data-i18n="statTimes"]');
-                    const statPeopleElements = document.querySelectorAll('[data-i18n="statPeople"]');
-                    
-                    statTimesElements.forEach(el => {
-                        el.innerHTML = dict.statTimes || '';
-                    });
-                    
-                    statPeopleElements.forEach(el => {
-                        el.innerHTML = dict.statPeople || '';
-                    });
-                    
-                    // 同时更新标签文字
-                    document.querySelectorAll('[data-i18n="statTotalViews"], [data-i18n="statVisitors"], [data-i18n="statPageViews"]').forEach(el => {
-                        const key = el.getAttribute('data-i18n');
-                        if (dict[key]) el.innerHTML = dict[key];
-                    });
-                }, 200); // 延迟200ms，确保不蒜子完成渲染
+                // 更新画廊状态文本
+                if (galleryImages.length > 0) {
+                    galleryStatus.textContent = (dict.gallerySuccess || '{count} screenshots loaded').replace('{count}', galleryImages.length);
+                }
+                
+                // 更新 URL 参数（不刷新页面）
+                const url = new URL(window.location);
+                url.searchParams.set('lang', langCode);
+                window.history.replaceState({}, '', url);
             };
 
             // 语言切换
